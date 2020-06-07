@@ -1,7 +1,7 @@
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 
-with open( 'polirooms.pdf', 'rb' ) as file:
+with open( 'Diseño_SD_optimizacion_ver1.pdf', 'rb' ) as file:
     fileContent = file.read()
 
 key = get_random_bytes( 32 )

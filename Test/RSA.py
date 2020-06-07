@@ -6,7 +6,7 @@ with open( 'Diseño_SD_optimizacion_ver1.pdf', 'rb' ) as file:
     file_content = file.read( )
 h = SHA256.new( )
 h.update( file_content )
-print( 'Original Hash : {}'.format( h.digest() ) )
+print( 'Original Hash:\n{}'.format( h.digest() ) )
 
 # Generate the keys
 private_key = RSA.generate( 2048 )
@@ -29,4 +29,4 @@ private_key = RSA.import_key( open('mykey').read() )
 decipher = PKCS1_OAEP.new( private_key )
 file_content = decipher.decrypt( cipher_file )
 
-print( '\nHash: {}'.format( file_content ) )
+print( '\nHash:\n{}'.format( file_content ) )

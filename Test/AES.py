@@ -13,11 +13,12 @@ ciphertext = cipher.encrypt( fileContent )
 with open( 'encrypt.pdf' , 'wb' ) as f:
     f.write( ciphertext )
 
+#Open the encrypt file and try to decrypt
 with open( 'encrypt.pdf' , 'rb' ) as fi:
     dec = fi.read()
 
 decipher = AES.new(key, AES.MODE_CTR, nonce=nonce)
 aux = decipher.decrypt( dec )
 
-with open( 'recuperando.pdf' , 'wb' ) as f:
+with open( 'decrypt.pdf' , 'wb' ) as f:
     f.write( aux )

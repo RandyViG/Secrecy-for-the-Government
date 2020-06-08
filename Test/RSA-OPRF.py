@@ -1,8 +1,7 @@
 from Crypto.Hash import SHA256
 from Crypto.Util.number import getStrongPrime, inverse
-from Crypto.PublicKey.RSA import construct
 from Crypto.PublicKey import RSA
-import numpy
+
 
 # We start with the hash of the document
 with open( 'Diseño_SD_optimizacion_ver1.pdf', 'rb' ) as file:

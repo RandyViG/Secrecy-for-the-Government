@@ -42,4 +42,4 @@ z=(y*r_inverse)%n
 print("This is the hash of the document\n(int) {}\n(bytes) {}".format(h_aux,h_aux.to_bytes(32,byteorder='little')))
 
 aux=pow(z,e,n)
-print("\nThis is the comprobation of de RSA - OPRF z^e mod n is equal to the hash\n(int) {}\n(bytes) {}".format(aux,aux.to_bytes(32,byteorder='little')))
+print("\nThis is the comprobation that RSA - OPRF z^e mod n is equal to the hash\n(int) {}\n(bytes) {}".format(aux,aux.to_bytes(32,byteorder='little')))

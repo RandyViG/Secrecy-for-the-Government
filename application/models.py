@@ -25,7 +25,7 @@ class UserModel(UserMixin):
         #convertirlo a user model
         user_data=UserData(
             username= user_id,
-            password= user[user_id],
+            password= user[user_id]
         )
         #Retornar el nuevo user model
         return UserModel(user_data)

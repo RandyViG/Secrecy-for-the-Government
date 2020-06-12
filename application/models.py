@@ -1,5 +1,10 @@
 from flask_login import UserMixin
 #from .firestore_service import get_user
+user={
+    'Pao': 'Paola',
+    'Ran': 'Randy',
+    'Bran': 'Brandon'
+}
 
 class UserData:
     def __init__(self,username,password):
@@ -16,12 +21,11 @@ class UserModel(UserMixin):
     
     @staticmethod
     def query(user_id):
-        #buscar user en la base de datos
-        #user_doc=get_user(user_id)
+        #buscar user 
         #convertirlo a user model
         user_data=UserData(
-            username='Paola',
-            password='Hola'
+            username= user_id,
+            password= user[user_id],
         )
         #Retornar el nuevo user model
         return UserModel(user_data)

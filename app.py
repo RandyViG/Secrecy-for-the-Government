@@ -1,6 +1,7 @@
 from application import create_app
-from flask import render_template, make_response,redirect
+from flask import render_template, request
 from flask_login import login_required, current_user
+from werkzeug.utils import secure_filename
 
 app = create_app()
 
@@ -14,6 +15,17 @@ def index():
     }
     return render_template( 'index.html',**context )
 
-@app.route('/file/upload')
+@app.route('/upload', methods=['GET','POST'])
 def upload_file():
+    if request.method == 'POST':
+        if not 'file' in request.files:
+            return 'No file part in the form'
+        f = request.files['file']
+        if f.filename == "":
+            return 'No file selected.'
+        if f:
+            filename = secure_filename(f.filename)
+            return 'file: ' + filename
+        
+        return "File not allowed."
     return render_template( 'upload.html' )

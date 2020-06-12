@@ -1,0 +1,13 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+<div class="container">
+    <div class="form-group col-xs-12 col-sm-6 col-md-4">
+      <label for="banner">Banner:</label>
+      <div class="input-group">
+          <label class="input-group-btn">
+              <span class="btn btn-primary btn-file">
+                  Banner <input accept=".jpg,.png,.jpeg,.gif" class="hidden" name="banner" type="file" id="banner">
+              </span>
+          </label>
+          <input class="form-control" id="banner_captura" readonly="readonly" name="banner_captura" type="text" value="">
+      </div>
+  </div>

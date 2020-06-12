@@ -13,3 +13,7 @@ def index():
         'username':username
     }
     return render_template( 'index.html',**context )
+
+@app.route('/file/upload')
+def upload_file():
+    return render_template( 'upload.html' )

@@ -20,6 +20,7 @@ def index():
 @app.route('/upload', methods=['GET','POST'])
 @login_required
 def upload_file():
+    username= current_user.id
     if request.method == 'POST':
         if not 'file' in request.files:
             return 'No file part in the form'
@@ -33,7 +34,7 @@ def upload_file():
             return 'file: ' + fname
         
         return "File not allowed."
-    return render_template( 'upload.html' )
+    return render_template( 'upload.html' , username=username )
 
 @app.route('/logout')
 @login_required

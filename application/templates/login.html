@@ -1,23 +1,30 @@
+{% extends 'bootstrap/base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
 
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
+{% block head %}
+    {{ super() }}
 
-        <title>Login</title>
-        
-        <!-- Custom styles for this template-->
-        <link rel="stylesheet" href="{{ url_for('static', filename='sb-admin-2.css')}}">
+    <title>
+        {% block title %} Login {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='sb-admin-2.css')}}">
+{% endblock %}
 
-    </head>
-
+{% block body %}
     <body class="bg-gradient-primary">
+        <!-- flash handler -->
+			{%for message in get_flashed_messages()%}
+				<div class="alert alert-success alert-dismissible">
+					<button type="button" 
+						data-dismiss="alert"
+						class="=close">&times;</button>
+						{{message}}
+				</div>
+			{%endfor%}
+        <!-- /flash handler -->
+        
+        <!-- container -->
         <div class="container">
             <!-- Outer Row -->
             <div class="row justify-content-center">
@@ -45,5 +52,12 @@
                 </div>
             </div>
         </div>
+        <!-- /container -->
+
+    <!-- scripts -->
+    {% block scripts %}
+        {{ super() }}
+    {% endblock %}
+    <!-- scripts -->
     </body>
-</html>
+{% endblock %}

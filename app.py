@@ -1,7 +1,7 @@
 from application import create_app
-from flask import render_template, request
-from flask_login import login_required, current_user
-from werkzeug.utils import secure_filename
+from flask import render_template, request, redirect, url_for
+from flask_login import login_required, current_user,logout_user
+from werkzeug.utils import secure_filename 
 
 
 app = create_app()
@@ -18,6 +18,7 @@ def index():
     return render_template( 'index.html',**context )
 
 @app.route('/upload', methods=['GET','POST'])
+@login_required
 def upload_file():
     if request.method == 'POST':
         if not 'file' in request.files:
@@ -31,6 +32,13 @@ def upload_file():
         
         return "File not allowed."
     return render_template( 'upload.html' )
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('auth.login'))
+
 
 if __name__ == "__main__":
     app.run( ssl_context=('cert.pem', 'key.pem') )

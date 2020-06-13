@@ -22,12 +22,12 @@ def upload_file():
     if request.method == 'POST':
         if not 'file' in request.files:
             return 'No file part in the form'
-        f = request.files['file']
-        if f.filename == "":
+        f = request.files['file'].read()
+        if str(f) =="b''":
             return 'No file selected.'
-        if f:
-            filename = secure_filename(f.filename)
-            return 'file: ' + filename
+        else:
+            #filename = secure_filename(f.filename)
+            return 'file: ' + str(f)
         
         return "File not allowed."
     return render_template( 'upload.html' )

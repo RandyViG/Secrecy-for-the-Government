@@ -21,6 +21,9 @@ def index():
 @login_required
 def upload_file():
     username= current_user.id
+    context={
+        'username':username
+    }
     if request.method == 'POST':
         if not 'file' in request.files:
             return 'No file part in the form'
@@ -28,13 +31,11 @@ def upload_file():
         fname = secure_filename( f.filename )
         f = f.read()
         if str(f) =="b''":
-            return 'No file selected.'
+            return redirect(url_for('upload_file'))
         else:
-            #filename = secure_filename(f.filename)
-            return 'file: ' + fname
-        
-        return "File not allowed."
-    return render_template( 'upload.html' , username=username )
+            #context['filename']=fname
+            return redirect(url_for('upload_file'))
+    return render_template( 'upload.html' ,**context)
 
 @app.route('/logout')
 @login_required

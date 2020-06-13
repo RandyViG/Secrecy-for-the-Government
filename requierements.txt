@@ -4,3 +4,4 @@ flask-bootstrap
 flask-login
 firebase-admin
 werkzeug
+pyopenssl

@@ -3,7 +3,9 @@ from flask import render_template, request
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 
+
 app = create_app()
+#app.run(ssl_context='adhoc')
 
 @app.route('/')
 @login_required
@@ -29,3 +31,6 @@ def upload_file():
         
         return "File not allowed."
     return render_template( 'upload.html' )
+
+if __name__ == "__main__":
+    app.run(ssl_context='adhoc')

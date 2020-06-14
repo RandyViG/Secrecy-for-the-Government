@@ -12,8 +12,8 @@ def login():
     login_form=LoginForm()
     context = {
         'login_form': login_form
-    }   
-    if login_form.validate_on_submit():  
+    }
+    if login_form.is_submitted():  
         user_id = login_form.username.data
         password = login_form.password.data
 

@@ -13,11 +13,15 @@ def get_users():
 def get_user(user_id):
     return db.collection('users').document(user_id).get()
 
-def put_fileHash(hash,filename,user_id):
+def put_fileHash(hash,filename,user_id,username):
     fileHash_ref = db.collection('files').document(hash).collection('owners')
-    fileHash_ref.add({user_id:''})
-    #fileHash_ref.add({'id':user_id})
+    fileHash_ref.add({user_id:username})
     db.document('files/{}'.format(hash,)).set({'filename':filename})
-    #fileHash_ref.set({'filename':filename})
-    #db.collection('file').document(hash)
+
+def get_hash(hash):
+    return db.collection('files').document(hash).get()
+
+def put_owner(hash,user_id,username):
+    hash_ref = db.collection('files').document(hash).collection('owners')
+    hash_ref.add({user_id:username})
     

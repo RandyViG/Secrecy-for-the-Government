@@ -1,9 +1,9 @@
 from application import create_app
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for,flash
 from flask_login import login_required, current_user,logout_user
 from werkzeug.utils import secure_filename 
 from Crypto.Hash import SHA256
-from application.firebase_service import put_fileHash
+from application.firebase_service import put_fileHash,get_hash,put_owner
 import base64
 
 app = create_app()
@@ -22,6 +22,7 @@ def index():
 @login_required
 def upload_file():
     username= current_user.name
+    userid=current_user.id
     context={
         'username':username
     }
@@ -34,13 +35,18 @@ def upload_file():
         if str(f) =="b''":
             return redirect(url_for('upload_file'))
         else:
-            #Convert
+            #Convert the hash to base64
             h = SHA256.new( )
             h.update( f )
-            print(base64.urlsafe_b64encode( h.digest() ))
             h_fb=base64.urlsafe_b64encode( h.digest() ).decode('ascii')
-            put_fileHash(hash=h_fb,filename=fname,user_id=username)
-            print(h_fb)
+            hash_doc=get_hash(hash=h_fb)
+            if hash_doc.to_dict() is None: #NO EXISTE
+                #Primer usuario
+                put_fileHash(hash=h_fb,filename=fname,user_id=userid,username=username)
+                #flash('Primer usuario')
+            else:
+                put_owner(hash=h_fb,user_id=userid,username=username)
+                #flash('Ya estaba el hash')
             return redirect(url_for('upload_file'))
             
     return render_template( 'upload.html' ,**context)

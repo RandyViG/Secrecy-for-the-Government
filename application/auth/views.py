@@ -22,10 +22,10 @@ def login():
             password_from_db = user_doc.to_dict()['password']
 
             if password == password_from_db:
-                username = user_doc.to_dict()['user']
-                user_data = UserData(user_id,password)
-                user = UserModel(user_data)
-                login_user(user)
+                user_name = user_doc.to_dict()['user']
+                user_data = UserData( user_id , user_name , password )
+                user = UserModel( user_data )
+                login_user( user )
                 return redirect(url_for('index'))
             else:
                 flash('Contraseña invalida')

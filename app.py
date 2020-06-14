@@ -12,8 +12,7 @@ app = create_app()
 @app.route('/')
 @login_required
 def index():
-    username= current_user.id
-    #print("user name: ",username)
+    username= current_user.name
     context={
         'username':username
     }
@@ -22,7 +21,7 @@ def index():
 @app.route('/upload', methods=['GET','POST'])
 @login_required
 def upload_file():
-    username= current_user.id
+    username= current_user.name
     context={
         'username':username
     }

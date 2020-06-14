@@ -1,3 +1,6 @@
+from Crypto.Random import get_random_bytes
+
 class Config:
-    SECRET_KEY='SUPER_SECRET'
+    key = get_random_bytes( 16 )
+    SECRET_KEY = key.hex()
     

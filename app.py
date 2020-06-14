@@ -2,7 +2,8 @@ from application import create_app
 from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user,logout_user
 from werkzeug.utils import secure_filename 
-
+from Crypto.Hash import SHA256
+import base64
 
 app = create_app()
 #app.run(ssl_context='adhoc')
@@ -33,7 +34,10 @@ def upload_file():
         if str(f) =="b''":
             return redirect(url_for('upload_file'))
         else:
-            #context['filename']=fname
+            #Convert
+            h = SHA256.new( )
+            h.update( f )
+            h_fb=base64.encodestring( h.digest() ).decode('ascii')
             return redirect(url_for('upload_file'))
     return render_template( 'upload.html' ,**context)
 

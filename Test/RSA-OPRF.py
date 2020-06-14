@@ -50,6 +50,9 @@ print("This is the hash of the document in base64 {}".format(h_base64s))
 #To return to byte
 h_base64b=str.encode(h_base64s)
 print("This is the hash of the document in base64 {}".format(h_base64b))
+#Here we can return to the original hash 
+original=base64.decodestring(h_base64b)
+print(original)
 
 aux=pow(z,e,n)
 print("\nThis is the comprobation that RSA - OPRF z^e mod n is equal to the hash\n(int) {}\n(bytes) {}".format(aux,aux.to_bytes(32,byteorder='little')))

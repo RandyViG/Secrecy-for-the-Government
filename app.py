@@ -3,6 +3,7 @@ from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user,logout_user
 from werkzeug.utils import secure_filename 
 from Crypto.Hash import SHA256
+from application.firebase_service import put_fileHash
 import base64
 
 app = create_app()
@@ -37,8 +38,12 @@ def upload_file():
             #Convert
             h = SHA256.new( )
             h.update( f )
-            h_fb=base64.encodestring( h.digest() ).decode('ascii')
+            print(base64.urlsafe_b64encode( h.digest() ))
+            h_fb=base64.urlsafe_b64encode( h.digest() ).decode('ascii')
+            put_fileHash(hash=h_fb,filename=fname,user_id=username)
+            print(h_fb)
             return redirect(url_for('upload_file'))
+            
     return render_template( 'upload.html' ,**context)
 
 @app.route('/logout')

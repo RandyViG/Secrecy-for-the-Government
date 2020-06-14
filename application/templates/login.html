@@ -8,7 +8,9 @@
     <title>
         {% block title %} Login {% endblock %}
     </title>
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sb-admin-2.css')}}">
+    
 {% endblock %}
 
 {% block body %}
@@ -40,10 +42,16 @@
                                             <h1 class="h4 text-gray-900 mb-4">Bienvenido</h1>
                                         </div>
                                         <hr>
-                                        <form method="post">
-                                            {{ wtf.form_field( login_form.username , class='form-control form-control-user', type='text' , placeholder='Ingresa tu número de empleado' ) }}
-                                            {{ wtf.form_field( login_form.password , class='form-control form-control-user', type='password' , placeholder='Ingresa tu contraseña' ) }}
-                                            {{ wtf.form_field( login_form.submit , class='btn btn-primary btn-user btn-block', type='submit' ) }}
+                                        <form class="user" method="post">
+                                            <div class="form-group">
+                                                {{ wtf.form_field( login_form.username , class='form-control form-control-user', type='text' , placeholder='Ingresa tu número de empleado' ) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ wtf.form_field( login_form.password , class='form-control form-control-user', type='password' , placeholder='Ingresa tu contraseña' ) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ wtf.form_field( login_form.submit , class='btn btn-primary btn-user btn-block', type='submit' ) }}
+                                            </div>
                                         </form>
                                         <hr>
                                         <div class="text-center">

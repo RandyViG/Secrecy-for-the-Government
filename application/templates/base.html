@@ -9,7 +9,9 @@
 {% endblock %}
 
 {% block body %}
-    
+	<script type=text/javascript>
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  	</script>
     <div id="wrapper">
 		{% if username %}
 			<!-- Sidebar -->
@@ -118,6 +120,5 @@
         {{ super() }}
     {% endblock %}
 	<!-- scripts -->
-	<script src="{{ url_for( 'static' , filename='js/generateKey.js') }}" ></script>
 
 {% endblock %}

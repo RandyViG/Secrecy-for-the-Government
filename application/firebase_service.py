@@ -1,8 +1,14 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+import json
 
-cred = credentials.ApplicationDefault()
+cert = "C:\\Users\\nahomi\\Documents\\ESCOM\\6toSemestre\\Criptografía\\Proyecto\\FinalProjectCrypto-b9b9bfcf0fa8.json"
+json_data = ""
+with open(cert) as json_file:
+    json_data = json.load(json_file)
+cred = credentials.Certificate(json_data)
+#cred = credentials.ApplicationDefault()
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
@@ -24,4 +30,6 @@ def get_hash(hash):
 def put_owner(hash,user_id,username):
     hash_ref = db.collection('files').document(hash).collection('owners')
     hash_ref.add({user_id:username})
-    
+
+def get_file(hash):
+    return db.collection('files').document(hash).get()

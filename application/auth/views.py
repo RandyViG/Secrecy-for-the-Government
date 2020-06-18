@@ -4,7 +4,14 @@ from . import auth
 from application.models import UserModel,UserData
 from flask_login import login_user, login_required, logout_user
 from application.firebase_service import get_user
+import pathlib
 #from werkzeug.security import generate_password_hash,check_password_hash
+def existKey(user_id):
+        directorio = pathlib.Path(".\\..\\data")
+        for fichero in directorio.iterdir():
+            if user_id in fichero.name:
+                return True
+        return False
 
 #este es el blueprint
 @auth.route('/login',methods=['GET','POST'])
@@ -26,6 +33,8 @@ def login():
                 user_data = UserData( user_id , user_name , password )
                 user = UserModel( user_data )
                 login_user( user )
+                if(not existKey(user_id)):
+                    return redirect(url_for('keygen'))
                 return redirect(url_for('index'))
             else:
                 flash('Contraseña invalida')
@@ -33,3 +42,4 @@ def login():
             flash('El nombre de usuario No existe Intente de nuevo')
 
     return render_template('login.html',**context)
+

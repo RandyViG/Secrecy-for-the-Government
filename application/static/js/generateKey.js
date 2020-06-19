@@ -24,6 +24,7 @@ true,
 		const exportedAsBase64 = window.btoa(exportedAsString);
 		const pemExported = `-----BEGIN PRIVATE KEY-----\n${exportedAsBase64}\n-----END PRIVATE KEY-----`;
 		//console.log(pemExported)
+		descargarArchivo(new Blob([exportedAsBase64], { type: 'application/x-pem-file'}),"privateKey.pem")
 	})
 
 	window.crypto.subtle.exportKey(

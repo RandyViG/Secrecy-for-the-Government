@@ -1,6 +1,6 @@
 from application import create_app
 from flask import render_template, request, redirect, url_for,flash
-from flask_login import login_required, current_user,logout_user
+from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename 
 from Crypto.Hash import SHA256
 from application.firebase_service import put_fileHash,get_hash,put_owner,get_file
@@ -9,8 +9,6 @@ import base64
 import json
 
 app = create_app()
-#app.run(ssl_context='adhoc')
-
 generate_keys()
 
 @app.route('/')
@@ -20,17 +18,8 @@ def index():
     context={
         'username':username
     }
+    
     return render_template( 'index.html',**context )
-
-
-
-@app.route('/keygen', methods=['GET','POST'])
-@login_required
-def keygen():
-    if request.method == 'POST':
-        open("./application/data/"+str(current_user.id)+".txt","w").write(request.json["k"])
-        return redirect(url_for('index'))
-    return render_template( 'keygen.html')
 
 @app.route('/upload', methods=['GET','POST'])
 @login_required
@@ -65,12 +54,6 @@ def upload_file():
             
     return render_template( 'upload.html' ,**context)
 
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('auth.login'))
-
 @app.route('/prueba/recuperar')
 def recuperar():
     hash = "xJGJQ16GvH7XOBLBmt8DUWZFJc15Am9EXMIzI1Hc7M0="
@@ -81,6 +64,7 @@ def recuperar():
     dataFile.setdefault("key",hash)
     dataFile = json.dumps(dataFile)
     print(dataFile)
+    
     return render_template("recuperar.html",dataFile = dataFile)
 
 if __name__ == "__main__":

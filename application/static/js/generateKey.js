@@ -23,10 +23,8 @@ true,
 		const exportedAsString=ab2str(exportedPrivateKey);
 		const exportedAsBase64 = window.btoa(exportedAsString);
 		const pemExported = `-----BEGIN PRIVATE KEY-----\n${exportedAsBase64}\n-----END PRIVATE KEY-----`;
-		console.log(exportedAsBase64)
-		//descargarArchivo(new Blob([exportedAsBase64], { type: 'text/plain'}),"privateKey.txt")
-		descargarArchivo(new Blob([pemExported], { type: 'application/x-pem-file'}),"privateKey.pem")
-	});
+		//console.log(pemExported)
+	})
 
 	window.crypto.subtle.exportKey(
 		"spki",
@@ -35,11 +33,11 @@ true,
 		const exportedAsString=ab2str(exportedPublicKey);
 		const exportedAsBase64 = window.btoa(exportedAsString);
 		const pemExported = `-----BEGIN PUBLIC KEY-----\n${exportedAsBase64}\n-----END PUBLIC KEY-----`;
-		//console.log(pemExported)})
+		//console.log(pemExported)
 		$.ajax({
 			type: "POST",
 			contentType: "application/json; charset=utf-8",
-			url: ($SCRIPT_ROOT +"/keygen"),
+			url: ($SCRIPT_ROOT + "/auth/keygen"),
 			data: JSON.stringify({k : exportedAsBase64}),
 			success: function (data) {
 			},

@@ -4,6 +4,7 @@ from Crypto.PublicKey import RSA
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from Crypto.Cipher import PKCS1_OAEP
+from os.path import isfile
 import base64
 
 def getHash(f):
@@ -33,6 +34,7 @@ def rsaOPRF(h):
     aux=pow(z,e,n)%n
     if aux != h_aux:
         return None
+    
     return getHash(z.to_bytes(256,byteorder='little'))
 
 def aes256(h,f):
@@ -55,20 +57,16 @@ def rsaOAEP(h,key):
     print("Después:",base64.urlsafe_b64encode( file_content ).decode('ascii'),"\n")
 
 def generate_keys():
+    private = './application/server/privateServer.pem'
+    public = './application/server/publicServer.pem'
+    
+    if isfile(private) and isfile( public):
+        print('\n\n\n\n\n \t\t\tNo se genero \n\n\n\n\n\n')
+        return
     pk = RSA.generate( 2048 )
-    with open('pk','wb') as f:
+    with open('./application/server/privateServer.pem','wb') as f:
         f.write( pk.export_key('PEM') )
     f.close
     puk = pk.publickey()
-    with open('puk.pub',"wb") as f:
+    with open('./application/server/publicServer.pem',"wb") as f:
         f.write( puk.export_key('PEM') )
-
-"""
-f = "Soy una prueba de laboratorio."
-h = rsaOPRF(getHash(f.encode()))
-hfb = h.digest()
-aes256(hfb,f.encode())
-private_key = RSA.generate( 2048 )
-print("Antes:",base64.urlsafe_b64encode( hfb ).decode('ascii'),"\n")
-rsaOAEP(hfb,private_key)
-"""

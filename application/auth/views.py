@@ -1,19 +1,21 @@
-from flask import render_template, session, redirect, flash, url_for 
+from flask import render_template, session, redirect, flash, url_for, request
 from application.forms import LoginForm
 from . import auth
 from application.models import UserModel,UserData
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from application.firebase_service import get_user
-import pathlib
+from os.path import isfile
 #from werkzeug.security import generate_password_hash,check_password_hash
-def existKey(user_id):
-        directorio = pathlib.Path(".\\application\\data")
-        for fichero in directorio.iterdir():
-            if user_id in fichero.name:
-                return True
-        return False
 
-#este es el blueprint
+def existKey(user_id):
+    #path = '.\\application\\data' + user_id + '.txt'
+    path = './application/data/' + user_id + '.pem'
+    print(path)
+    if isfile( path ):
+        return True
+    return False
+
+
 @auth.route('/login',methods=['GET','POST'])
 def login():
     login_form=LoginForm()
@@ -33,8 +35,8 @@ def login():
                 user_data = UserData( user_id , user_name , password )
                 user = UserModel( user_data )
                 login_user( user )
-                if(not existKey(user_id)):
-                    return redirect(url_for('keygen'))
+                if( not existKey(user_id) ):
+                    return redirect(url_for('auth.keygen'))
                 return redirect(url_for('index'))
             else:
                 flash('Contraseña invalida')
@@ -43,3 +45,25 @@ def login():
 
     return render_template('login.html',**context)
 
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    
+    return redirect(url_for('auth.login'))
+
+@auth.route('/keygen', methods=['GET','POST'])
+@login_required
+def keygen():
+    if request.method == 'POST':
+        k = request.json["k"]
+        username = current_user.id
+        context = {'username':username}
+        print("k:",k)
+        with open("./application/data/"+str(current_user.id)+".pem","w") as f:
+            aux='-----BEGIN PUBLIC KEY-----\n'+k+'\n-----END PUBLIC KEY-----'
+            f.write(aux)
+        f.close()
+        return redirect(url_for('index'))
+
+    return render_template('keygen.html')

@@ -2,13 +2,14 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 import json
-
+'''
 cert = "C:\\Users\\nahomi\\Documents\\ESCOM\\6toSemestre\\Criptografía\\Proyecto\\FinalProjectCrypto-b9b9bfcf0fa8.json"
 json_data = ""
 with open(cert) as json_file:
     json_data = json.load(json_file)
 cred = credentials.Certificate(json_data)
-#cred = credentials.ApplicationDefault()
+'''
+cred = credentials.ApplicationDefault()
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()

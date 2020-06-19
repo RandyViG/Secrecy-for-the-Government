@@ -37,7 +37,7 @@ true,
 		$.ajax({
 			type: "POST",
 			contentType: "application/json; charset=utf-8",
-			url: ($SCRIPT_ROOT +"/keygen"),
+			url: ($SCRIPT_ROOT + "/auth/keygen"),
 			data: JSON.stringify({k : exportedAsBase64}),
 			success: function (data) {
 			},

@@ -14,6 +14,7 @@ def create_app():
     app.config.from_object(Config)
     login_manager.init_app(app)
     app.register_blueprint(auth) #Registramos el blueprint
+    
     return app
 
 @login_manager.user_loader

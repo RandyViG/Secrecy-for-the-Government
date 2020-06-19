@@ -33,7 +33,9 @@ def upload_file():
         if not 'file' in request.files:
             return 'No file part in the form'
         f = request.files['file']
+        print(f)
         fname = secure_filename( f.filename )
+    
         f = f.read()
         if str(f) =="b''":
             return redirect(url_for('upload_file'))

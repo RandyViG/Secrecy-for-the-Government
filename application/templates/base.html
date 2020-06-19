@@ -94,11 +94,7 @@
                     {% block content %}
                     {% endblock %}
                     <!-- /main -->
-					<section class="encrypt-decrypt rsa-oaep">
-						<section class="encrypt-decrypt-controls">
-						  <input class="encrypt-button" type="button" value="Generate">
-						</section>
-					</section>
+					
                     <!-- footer -->
                     {% block footer %}
                         {% include 'footer.html' %}
@@ -117,5 +113,5 @@
         {{ super() }}
     {% endblock %}
 	<!-- scripts -->
-
+	
 {% endblock %}

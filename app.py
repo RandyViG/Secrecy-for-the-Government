@@ -28,12 +28,8 @@ def index():
 @login_required
 def keygen():
     if request.method == 'POST':
-        k = request.json["k"]
-        username= current_user.id
-        context={'username':username}
-        print("k:",k)
-        open("./application/data/"+str(current_user.name)+".txt","w").write(k)
-        return render_template( 'index.html',**context )
+        open("./application/data/"+str(current_user.id)+".txt","w").write(request.json["k"])
+        return redirect(url_for('index'))
     return render_template( 'keygen.html')
 
 @app.route('/upload', methods=['GET','POST'])

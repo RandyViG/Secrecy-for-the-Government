@@ -7,7 +7,7 @@ from application.firebase_service import get_user
 import pathlib
 #from werkzeug.security import generate_password_hash,check_password_hash
 def existKey(user_id):
-        directorio = pathlib.Path(".\\..\\data")
+        directorio = pathlib.Path(".\\application\\data")
         for fichero in directorio.iterdir():
             if user_id in fichero.name:
                 return True

@@ -9,9 +9,6 @@
 {% endblock %}
 
 {% block body %}
-	<script type=text/javascript>
-		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-  	</script>
     <div id="wrapper">
 		{% if username %}
 			<!-- Sidebar -->

@@ -3,7 +3,7 @@ from flask import render_template, request, redirect, url_for,flash
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename 
 from Crypto.Hash import SHA256
-from application.firebase_service import put_fileHash,get_hash,put_owner,get_file
+from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files
 from application.crypto import generate_keys, getHash, rsaOPRF
 import base64
 import json
@@ -15,8 +15,10 @@ generate_keys()
 @login_required
 def index():
     username= current_user.name
+    files = get_files( current_user.id )
     context={
-        'username':username
+        'username':username,
+        'files':files,
     }
     
     return render_template( 'index.html',**context )

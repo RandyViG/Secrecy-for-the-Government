@@ -23,8 +23,10 @@ true,
 		const exportedAsString=ab2str(exportedPrivateKey);
 		const exportedAsBase64 = window.btoa(exportedAsString);
 		const pemExported = `-----BEGIN PRIVATE KEY-----\n${exportedAsBase64}\n-----END PRIVATE KEY-----`;
-		console.log(pemExported)
-	})
+		console.log(exportedAsBase64)
+		//descargarArchivo(new Blob([exportedAsBase64], { type: 'text/plain'}),"privateKey.txt")
+		descargarArchivo(new Blob([pemExported], { type: 'application/x-pem-file'}),"privateKey.pem")
+	});
 
 	window.crypto.subtle.exportKey(
 		"spki",

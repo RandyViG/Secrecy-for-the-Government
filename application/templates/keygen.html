@@ -1,7 +1,12 @@
-{% extends 'base.html' %}
-
-{% block  content %}
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+	<script type=text/javascript>
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  	</script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <p>Generando Llave...</p>
     <script src="{{ url_for( 'static' , filename='js/generateKey.js') }}"></script>
-{% endblock %}
+</body>
+</html>

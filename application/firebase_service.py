@@ -37,18 +37,13 @@ def get_file(hash):
     return db.collection('files').document(hash).get()
 
 def get_files( user_id ):
-    ids = [ ]
     nameFile = [ ]
     files = db.collection('files').stream()
-    for file in files:
-        ids.append( file.id )
-
-    for id in ids:
-        owners = db.collection('files').document( id ).collection('owners').stream()
+    for file in files:  
+        owners = db.collection('files').document( file.id ).collection('owners').stream()
         for owner in owners:
             try:
                 owner.to_dict()[user_id]
-                file = db.collection('files').document( id ).get()
                 nameFile.append( file.to_dict()['filename'] )
                 break
             except:

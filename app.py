@@ -1,4 +1,5 @@
 from application import create_app
+from application.forms import DeleteFile, DownloadFile
 from flask import render_template, request, redirect, url_for,flash
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename 
@@ -16,9 +17,13 @@ generate_keys()
 def index():
     username= current_user.name
     files = get_files( current_user.id )
+    delete_form = DeleteFile()
+    download_form = DownloadFile()
     context={
         'username':username,
         'files':files,
+        'delete_form':DeleteFile(),
+        'download_form':DownloadFile(),
     }
     
     return render_template( 'index.html',**context )

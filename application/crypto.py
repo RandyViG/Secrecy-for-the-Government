@@ -15,8 +15,8 @@ def getHash(f):
 def rsaOPRF(h):
     h_aux=int.from_bytes(h.digest(), byteorder='little')
     #Llave Servidor
-    private_key = RSA.import_key( open('pk.pub').read() )
-    public_key = RSA.import_key( open('puk.pub').read() )
+    private_key = RSA.import_key( open('./application/server/privateServer.pem').read() )
+    public_key = RSA.import_key( open('./application/server/publicServer.pem').read() )
     # Public exponent
     e=public_key.e
     # Product of p*q (numbers primes)

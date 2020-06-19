@@ -1,0 +1,11 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+
+
+{% macro render_file(num,file,delete_form,download_form) %}
+    <tr>
+        <th scope="row">{{num}}</th>
+        <td>{{file}}</td>
+        <td>{{ wtf.form_field( delete_form.submit , class='btn btn-danger btn-user btn-block', type='submit' ) }}</td>
+        <td>{{ wtf.form_field( download_form.submit , class='btn btn-primary btn-user btn-block', type='submit' ) }}</td>
+    </tr>
+{% endmacro %}

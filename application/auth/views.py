@@ -64,6 +64,5 @@ def keygen():
             aux='-----BEGIN PUBLIC KEY-----\n'+k+'\n-----END PUBLIC KEY-----'
             f.write(aux)
         f.close()
-        return redirect(url_for('index'))
-
+        #return redirect(url_for('index'))
     return render_template('keygen.html')

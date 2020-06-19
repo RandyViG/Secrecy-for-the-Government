@@ -23,7 +23,7 @@ true,
 		const exportedAsString=ab2str(exportedPrivateKey);
 		const exportedAsBase64 = window.btoa(exportedAsString);
 		const pemExported = `-----BEGIN PRIVATE KEY-----\n${exportedAsBase64}\n-----END PRIVATE KEY-----`;
-		console.log(pemExported)
+		//console.log(pemExported)
 	})
 
 	window.crypto.subtle.exportKey(
@@ -33,7 +33,7 @@ true,
 		const exportedAsString=ab2str(exportedPublicKey);
 		const exportedAsBase64 = window.btoa(exportedAsString);
 		const pemExported = `-----BEGIN PUBLIC KEY-----\n${exportedAsBase64}\n-----END PUBLIC KEY-----`;
-		//console.log(pemExported)})
+		//console.log(pemExported)
 		$.ajax({
 			type: "POST",
 			contentType: "application/json; charset=utf-8",

@@ -9,7 +9,8 @@ from os.path import isfile
 
 def existKey(user_id):
     #path = '.\\application\\data' + user_id + '.txt'
-    path = './application/data/' + user_id + '.txt'
+    path = './application/data/' + user_id + '.pem'
+    print(path)
     if isfile( path ):
         return True
     return False
@@ -59,8 +60,10 @@ def keygen():
         username = current_user.id
         context = {'username':username}
         print("k:",k)
-        open("./application/data/"+str(current_user.id)+".txt","w").write(k)
-
-        return render_template( 'index.html', **context )
+        with open("./application/data/"+str(current_user.id)+".pem","w") as f:
+            aux='-----BEGIN PUBLIC KEY-----\n'+k+'\n-----END PUBLIC KEY-----'
+            f.write(aux)
+        f.close()
+        return redirect(url_for('index'))
 
     return render_template('keygen.html')

@@ -70,6 +70,19 @@ def upload_file():
             
     return render_template( 'upload.html' ,**context)
 
+@app.route('/delete/<file>')
+def delete(file):
+    flash('Borrando: '+file)
+
+    return redirect(url_for('index'))
+
+
+@app.route('/download/<file>')
+def download(file):
+    flash('descargando: '+file)
+    
+    return redirect(url_for('index'))
+
 @app.route('/prueba/recuperar')
 def recuperar():
     hash = "xJGJQ16GvH7XOBLBmt8DUWZFJc15Am9EXMIzI1Hc7M0="

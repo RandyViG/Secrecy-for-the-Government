@@ -10586,6 +10586,16 @@ a:focus {
   }
 }
 
+#icon-download {
+  height: 50px;
+  width: 50px;
+}
+
+#icon-delete {
+  height: 45px;
+  width: 45px;
+}
+
 #login-img {
   height: 150px;
   width: 150px;

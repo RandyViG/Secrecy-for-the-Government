@@ -5,7 +5,7 @@
     <tr>
         <th scope="row">{{num}}</th>
         <td>{{file}}</td>
-        <td>{{ wtf.form_field( download_form.submit , class='btn btn-primary btn-user btn-block', type='submit' ) }}</td>
-        <td>{{ wtf.form_field( delete_form.submit , class='btn btn-danger btn-user btn-block', type='submit' ) }}</td>
+        <td><a href="{{ url_for( 'index' , file=file ) }}" > <img id="icon-download" src="{{ url_for( 'static' , filename='images/download.png' ) }}" > </a></td>
+        <td><a href="{{ url_for( 'index' , file=file ) }}"> <img id="icon-delete" src="{{ url_for( 'static' , filename='images/delete.png' ) }}" > </a></td>
     </tr>
 {% endmacro %}

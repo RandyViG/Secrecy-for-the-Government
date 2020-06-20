@@ -2,6 +2,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 import json
+from flask import flash
 '''
 cert = "C:\\Users\\nahomi\\Documents\\ESCOM\\6toSemestre\\Criptografía\\Proyecto\\FinalProjectCrypto-b9b9bfcf0fa8.json"
 json_data = ""
@@ -34,3 +35,18 @@ def put_owner(hash,user_id,username):
 
 def get_file(hash):
     return db.collection('files').document(hash).get()
+
+def get_files( user_id ):
+    nameFile = [ ]
+    files = db.collection('files').stream()
+    for file in files:  
+        owners = db.collection('files').document( file.id ).collection('owners').stream()
+        for owner in owners:
+            try:
+                owner.to_dict()[user_id]
+                nameFile.append( file.to_dict()['filename'] )
+                break
+            except:
+                continue
+
+    return nameFile

@@ -61,12 +61,12 @@ def generate_keys():
     public = './application/server/publicServer.pem'
     
     if isfile(private) and isfile( public):
-        print('\n\n\n\n\n \t\t\tNo se genero \n\n\n\n\n\n')
         return
     pk = RSA.generate( 2048 )
     with open('./application/server/privateServer.pem','wb') as f:
         f.write( pk.export_key('PEM') )
-    f.close
+    f.close()
     puk = pk.publickey()
     with open('./application/server/publicServer.pem',"wb") as f:
         f.write( puk.export_key('PEM') )
+    f.close()

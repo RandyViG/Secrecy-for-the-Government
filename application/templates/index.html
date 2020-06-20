@@ -13,7 +13,7 @@
     </thead>
     <tbody>
       {% for file in files %}
-        {{ macros.render_file(1,file,delete_form,download_form) }}
+        {{ macros.render_file(loop.index,file,delete_form,download_form) }}
       {% endfor %}
     </tbody>
   </table>

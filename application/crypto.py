@@ -35,7 +35,7 @@ def rsaOPRF(h):
     if aux != h_aux:
         return None
     
-    return getHash(z.to_bytes(256,byteorder='little'))
+    return getHash(z.to_bytes(256,byteorder='little')).digest()
 
 def aes256(h,f):
     #Cifrado
@@ -43,8 +43,9 @@ def aes256(h,f):
     nonce = cipher.nonce
     ciphertext = cipher.encrypt( f )
     #Descifrado
-    decipher = AES.new(h, AES.MODE_CTR, nonce=nonce)
-    aux = decipher.decrypt( ciphertext )
+    #decipher = AES.new(h, AES.MODE_CTR, nonce=nonce)
+    #aux = decipher.decrypt( ciphertext )
+    return nonce,ciphertext
 
 def rsaOAEP(h,key):
     # Encrypt

@@ -21,17 +21,17 @@ def get_users():
 def get_user(user_id):
     return db.collection('users').document(user_id).get()
 
-def put_fileHash(hash,filename,user_id,username):
+def put_fileHash(hash,filename,user_id,username,encryptFile):
     fileHash_ref = db.collection('files').document(hash).collection('owners')
     fileHash_ref.add({user_id:username})
-    db.document('files/{}'.format(hash,)).set({'filename':filename})
+    db.document('files/{}'.format(hash,)).set({'filename':filename,'file':encryptFile})
 
 def get_hash(hash):
     return db.collection('files').document(hash).get()
 
 def put_owner(hash,user_id,username):
     hash_ref = db.collection('files').document(hash).collection('owners')
-    hash_ref.add({user_id:username})
+    hash_ref.add({user_id:username}) 
 
 def get_file(hash):
     return db.collection('files').document(hash).get()

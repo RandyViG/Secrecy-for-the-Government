@@ -1,18 +1,25 @@
-{% extends 'base.html' %}
+{% extends 'bootstrap/base.html' %}
 	{% block  content %}
-
-	<div class="card text-center">
-		<div class="card-header">
-		  ¡Bienvenido!
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/sb-admin-2.css')}}">
+	<body class="prueba">
+		<div class="container">
+			<div class="row justify-content-center">
+				
+				<div class="card text-center w-50 my-5">
+					<div class="card-header">
+					¡Bienvenido!
+					</div>
+					<div class="card-body">
+					<h5 class="card-title">Generacion de llaves</h5>
+					<p class="card-text">¡Hemos generado tu llave publica y privada!<br>
+											Descarga tu llave privada para poder tener acceso a tu página inicial.</p>
+					<a href="{{ url_for('index') }}" id="foo:bar" class="btn btn-primary">Descargar Llave Privada</a>
+					</div>
+				</div>
+				
+			</div>
 		</div>
-		<div class="card-body">
-		  <h5 class="card-title">Generacion de llaves</h5>
-		  <p class="card-text">¡Hemos generado tu llave publica y privada!<br>
-			  					Descarga tu llave privada para poder tener acceso a tu página inicial.</p>
-		  <a href="{{ url_for('index') }}" id="foo:bar" class="btn btn-primary">Descargar Llave Privada</a>
-		</div>
-	  </div>
-
+	</body>
 	<script type=text/javascript>
     	$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
   	</script>

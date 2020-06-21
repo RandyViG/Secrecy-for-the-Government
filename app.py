@@ -6,6 +6,8 @@ from werkzeug.utils import secure_filename
 from Crypto.Hash import SHA256
 from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files,put_keyUser
 from application.crypto import generate_keys, getHash, rsaOPRF, aes256,rsaOAEP
+from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files,delete_file
+from application.crypto import generate_keys, getHash, rsaOPRF, aes256
 import base64
 import binascii
 import json
@@ -83,14 +85,15 @@ def upload_file():
 
 @app.route('/delete/<file>')
 def delete(file):
-    flash('Borrando: '+file)
+    user_id = current_user.id
+    delete_file( user_id , file )
 
     return redirect(url_for('index'))
 
 
 @app.route('/download/<file>')
 def download(file):
-    flash('descargando: '+file)
+    flash('descargando: '+ file)
     
     return redirect(url_for('index'))
 

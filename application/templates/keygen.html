@@ -1,22 +1,37 @@
 {% extends 'bootstrap/base.html' %}
-	{% block  content %}
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/sb-admin-2.css')}}">
-	<body class="prueba">
+
+{% block head %}
+{{ super() }}
+
+<title>
+	{% block title %} Claves {% endblock %}
+</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sb-admin-2.css')}}">
+
+{% endblock %}
+
+{% block  content %}
+	<body class="bg-gradient-primary">
 		<div class="container">
 			<div class="row justify-content-center">
-				
 				<div class="card text-center w-50 my-5">
 					<div class="card-header">
-					¡Bienvenido!
+						<h1>¡Bienvenido!</h1>
 					</div>
 					<div class="card-body">
-					<h5 class="card-title">Generacion de llaves</h5>
-					<p class="card-text">¡Hemos generado tu llave publica y privada!<br>
-											Descarga tu llave privada para poder tener acceso a tu página inicial.</p>
-					<a href="{{ url_for('index') }}" id="foo:bar" class="btn btn-primary">Descargar Llave Privada</a>
+						<h2 class="card-title">Generación de claves</h5>
+						<p class="card-text">
+							<div class="alert alert-success" role="alert">
+								¡Hemos generado tu clave pública y privada!
+							</div>
+							Con estas claves mantendremos tus documentos seguros, por lo tanto, es muy importante 
+							que no pierdas tu clave privada, ya que solo con ella podrás recuperar todo lo que 
+							subas a partir de este momento.<br>
+							<strong>Descarga tu clave privada para poder tener acceso a la página inicio.</strong>
+						</p>
+						<a href="{{ url_for('index') }}" id="foo:bar" class="btn btn-primary">Descargar clave Privada</a>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</body>

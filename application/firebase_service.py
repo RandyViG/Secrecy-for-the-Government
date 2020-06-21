@@ -44,7 +44,7 @@ def get_files( user_id ):
     nameFile = [ ]
     files = db.collection('files').stream()
     for file in files:  
-        owners = db.collection('files').document( file.id ).collection('owners').stream()
+        owners = db.collection( 'files/{}/owners'.format(file.id) ).stream()
         for owner in owners:
             try:
                 owner.to_dict()[user_id]
@@ -55,4 +55,26 @@ def get_files( user_id ):
 
     return nameFile
 
+<<<<<<< HEAD
+=======
+def delete_file( user_id , file_name ):
+    files = db.collection('files').stream()
+    for file in files:
+        if file_name == file.to_dict()['filename']:
+            owners = db.collection( 'files/{}/owners'.format(file.id) ).stream()
+            cont = 0
+            id = 0
+            for owner in owners:
+                cont += 1
+                try:
+                    owner.to_dict()[user_id]
+                    id = owner.id
+                except:
+                    continue
+            if cont > 1 :
+                db.document( 'files/{}/owners/{}'.format(file.id,id) ).delete()
+            else:
+                db.document( 'files/{}'.format(file.id) ).delete()
+            break
+>>>>>>> fa92e09e1532d42e3d2ae23ac66af366cc05209c
 

@@ -4,7 +4,7 @@ from flask import render_template, request, redirect, url_for,flash
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename 
 from Crypto.Hash import SHA256
-from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files
+from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files,delete_file
 from application.crypto import generate_keys, getHash, rsaOPRF, aes256
 import base64
 import binascii
@@ -61,10 +61,8 @@ def upload_file():
                 encryptFile_hexa = binascii.hexlify( encryptFile )
                 y = str( encryptFile_hexa,'ascii' )
                 put_fileHash(hash=h_fb,filename=fname,user_id=userid,username=username,encryptFile=y)
-                #flash('Primer usuario')
             else:
                 put_owner(hash=h_fb,user_id=userid,username=username)
-                #flash('Ya estaba el hash')
             
             return redirect(url_for('upload_file'))
             
@@ -72,14 +70,15 @@ def upload_file():
 
 @app.route('/delete/<file>')
 def delete(file):
-    flash('Borrando: '+file)
+    user_id = current_user.id
+    delete_file( user_id , file )
 
     return redirect(url_for('index'))
 
 
 @app.route('/download/<file>')
 def download(file):
-    flash('descargando: '+file)
+    flash('descargando: '+ file)
     
     return redirect(url_for('index'))
 

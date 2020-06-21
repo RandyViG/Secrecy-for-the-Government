@@ -41,7 +41,6 @@ def get_files( user_id ):
     files = db.collection('files').stream()
     for file in files:  
         owners = db.collection( 'files/{}/owners'.format(file.id) ).stream()
-        flash( file.to_dict() )
         for owner in owners:
             try:
                 owner.to_dict()[user_id]

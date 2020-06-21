@@ -63,7 +63,7 @@ def upload_file():
                 put_fileHash(hash=h_fb,filename=fname,user_id=userid,username=username,encryptFile=y)
             else:
                 put_owner(hash=h_fb,user_id=userid,username=username)
-            
+            flash( 'Se ha subido el archivo: {}'.format(fname) )
             return redirect(url_for('upload_file'))
             
     return render_template( 'upload.html' ,**context)

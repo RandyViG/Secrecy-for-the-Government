@@ -55,8 +55,6 @@ def get_files( user_id ):
 
     return nameFile
 
-<<<<<<< HEAD
-=======
 def delete_file( user_id , file_name ):
     files = db.collection('files').stream()
     for file in files:
@@ -76,5 +74,4 @@ def delete_file( user_id , file_name ):
             else:
                 db.document( 'files/{}'.format(file.id) ).delete()
             break
->>>>>>> fa92e09e1532d42e3d2ae23ac66af366cc05209c
 

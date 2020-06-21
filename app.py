@@ -4,9 +4,8 @@ from flask import render_template, request, redirect, url_for,flash
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename 
 from Crypto.Hash import SHA256
-from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files,put_keyUser
+from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files,put_keyUser,delete_file
 from application.crypto import generate_keys, getHash, rsaOPRF, aes256,rsaOAEP
-from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files,delete_file
 from application.crypto import generate_keys, getHash, rsaOPRF, aes256
 import base64
 import binascii

@@ -21,10 +21,14 @@ def get_users():
 def get_user(user_id):
     return db.collection('users').document(user_id).get()
 
-def put_fileHash(hash,filename,user_id,username,encryptFile):
+def put_keyUser(user_id,filename,h):
+    ref = db.collection('users').document(user_id).collection('keys').document(filename)
+    ref.set({'hash':h})
+
+def put_fileHash(hash,filename,user_id,username,encryptFile,nonce):
     fileHash_ref = db.collection('files').document(hash).collection('owners')
     fileHash_ref.add({user_id:username})
-    db.document('files/{}'.format(hash,)).set({'filename':filename,'file':encryptFile})
+    db.document('files/{}'.format(hash,)).set({'filename':filename,'file':encryptFile,'nonce':nonce})
 
 def get_hash(hash):
     return db.collection('files').document(hash).get()
@@ -50,3 +54,5 @@ def get_files( user_id ):
                 continue
 
     return nameFile
+
+

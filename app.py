@@ -4,8 +4,8 @@ from flask import render_template, request, redirect, url_for,flash
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename 
 from Crypto.Hash import SHA256
-from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files
-from application.crypto import generate_keys, getHash, rsaOPRF, aes256
+from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files,put_keyUser
+from application.crypto import generate_keys, getHash, rsaOPRF, aes256,rsaOAEP
 import base64
 import binascii
 import json
@@ -60,12 +60,23 @@ def upload_file():
                 #Hexadecimal
                 encryptFile_hexa = binascii.hexlify( encryptFile )
                 y = str( encryptFile_hexa,'ascii' )
-                put_fileHash(hash=h_fb,filename=fname,user_id=userid,username=username,encryptFile=y)
+                nonce_hexa = binascii.hexlify( nonce )
+                nonce_hexa = str(nonce_hexa,'ascii')
+                put_fileHash(hash=h_fb,filename=fname,user_id=userid,username=username,encryptFile=y,nonce=nonce_hexa)
+                
                 #flash('Primer usuario')
             else:
                 put_owner(hash=h_fb,user_id=userid,username=username)
                 #flash('Ya estaba el hash')
             
+            public_key_user = open('application/data/'+userid+'.pem').read()
+            Gz_cipher = rsaOAEP( Gz,public_key_user )
+            
+            #Hexadecimal
+            Gz_cipher = binascii.hexlify( Gz_cipher)
+            Gz_cipher = str( Gz_cipher,'ascii')
+            put_keyUser(user_id=userid,filename=fname,h=Gz_cipher)
+
             return redirect(url_for('upload_file'))
             
     return render_template( 'upload.html' ,**context)

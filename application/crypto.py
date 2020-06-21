@@ -42,20 +42,19 @@ def aes256(h,f):
     cipher = AES.new( h , AES.MODE_CTR )
     nonce = cipher.nonce
     ciphertext = cipher.encrypt( f )
-    #Descifrado
-    #decipher = AES.new(h, AES.MODE_CTR, nonce=nonce)
-    #aux = decipher.decrypt( ciphertext )
     return nonce,ciphertext
 
 def rsaOAEP(h,key):
+    public_key = RSA.import_key( key )
     # Encrypt
-    cipher = PKCS1_OAEP.new( key.publickey() )
+    cipher = PKCS1_OAEP.new( public_key )
     cipher_file = cipher.encrypt( h )
-    print("Cifrado:",base64.urlsafe_b64encode( cipher_file ).decode('ascii'),"\n")
+    return cipher_file
+    #print("Cifrado:",base64.urlsafe_b64encode( cipher_file ).decode('ascii'),"\n")
     # Decrypt
-    decipher = PKCS1_OAEP.new( key )
-    file_content = decipher.decrypt( cipher_file )
-    print("Después:",base64.urlsafe_b64encode( file_content ).decode('ascii'),"\n")
+    #decipher = PKCS1_OAEP.new( key )
+    #file_content = decipher.decrypt( cipher_file )
+    #print("Después:",base64.urlsafe_b64encode( file_content ).decode('ascii'),"\n")
 
 def generate_keys():
     private = './application/server/privateServer.pem'

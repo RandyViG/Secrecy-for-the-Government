@@ -74,9 +74,9 @@ def upload_file():
             Gz_cipher = rsaOAEP( Gz,public_key_user )
             
             #Hexadecimal
-            Gz_cipher = binascii.hexlify( Gz_cipher)
-            Gz_cipher = str( Gz_cipher,'ascii')
-            #Gz_cipher = base64.urlsafe_b64encode(Gz_cipher)
+            #Gz_cipher = binascii.hexlify( Gz_cipher)
+            #Gz_cipher = str( Gz_cipher,'ascii')
+            Gz_cipher = base64.urlsafe_b64encode(Gz_cipher).decode('ascii')
             put_keyUser(user_id=userid,filename=fname,h=Gz_cipher,id_hash=h_fb)
 
             return redirect(url_for('upload_file'))
@@ -100,7 +100,8 @@ def download():
         flash('descargando: '+ file)
         user_id = current_user.id
         hash,data_file = get_file(user_id,file)
-        #hash.replace('-','/').replace('-','+')
+        
+        hash=hash.replace('-','+').replace('_','/')
         data_file.setdefault("hash",hash)
         data_file.setdefault("mime",str(get_MIME(data_file["filename"])))
         return jsonify(result = data_file)

@@ -6,6 +6,9 @@ from Crypto.Random import get_random_bytes
 from Crypto.Cipher import PKCS1_OAEP
 from os.path import isfile
 import base64
+import mimetypes
+
+mimetypes.init()
 
 def getHash(f):
     h = SHA256.new( )
@@ -70,3 +73,7 @@ def generate_keys():
     with open('./application/server/publicServer.pem',"wb") as f:
         f.write( puk.export_key('PEM') )
     f.close()
+
+def get_MIME(filename):
+    extencion = "." + str(filename.split(".")[-1])
+    return mimetypes.types_map[extencion]

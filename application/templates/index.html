@@ -2,6 +2,11 @@
 {% import 'macros.html' as macros %}
 
 {% block  content %}
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+<script src="{{ url_for( 'static' , filename='js/recuperar.js') }}"></script>
+<div id = "get_key"></div>
 <table class="table table-hover">
     <thead>
       <tr>
@@ -16,6 +21,14 @@
         {{ macros.render_file(loop.index,file,delete_form,download_form) }}
       {% endfor %}
     </tbody>
-  </table>
-
+</table>
+<script src="{{ url_for( 'static' , filename='js/library/aes.js') }}"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/enc-base64.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/enc-utf8.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/pad-nopadding.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/enc-hex.js"></script>
+<script src="{{ url_for( 'static' , filename='js/downloadFile.js') }}"></script>
+<script src="{{ url_for( 'static' , filename='js/typeConversion.js') }}"></script>
+<script src="{{ url_for( 'static' , filename='js/library/mode-ctr.js') }}"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 {% endblock %}

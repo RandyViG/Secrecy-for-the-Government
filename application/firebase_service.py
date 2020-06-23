@@ -21,9 +21,9 @@ def get_users():
 def get_user(user_id):
     return db.collection('users').document(user_id).get()
 
-def put_keyUser(user_id,filename,h):
+def put_keyUser(user_id,filename,h,id_hash):
     ref = db.collection('users').document(user_id).collection('keys').document(filename)
-    ref.set({'hash':h})
+    ref.set({'hash':h,'id_hash':id_hash})
 
 def put_fileHash(hash,filename,user_id,username,encryptFile,nonce):
     fileHash_ref = db.collection('files').document(hash).collection('owners')
@@ -37,8 +37,9 @@ def put_owner(hash,user_id,username):
     hash_ref = db.collection('files').document(hash).collection('owners')
     hash_ref.add({user_id:username}) 
 
-def get_file(hash):
-    return db.collection('files').document(hash).get()
+def get_file(user_id,filename):
+    file_data = db.collection('users').document(user_id).collection('keys').document(filename).get().to_dict()
+    return file_data['hash'],db.collection('files').document(file_data['id_hash']).get().to_dict()
 
 def get_files( user_id ):
     nameFile = [ ]

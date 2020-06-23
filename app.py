@@ -1,12 +1,11 @@
 from application import create_app
 from application.forms import DeleteFile, DownloadFile
-from flask import render_template, request, redirect, url_for,flash
+from flask import render_template, request, redirect, url_for,flash, make_response, jsonify
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename 
 from Crypto.Hash import SHA256
 from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files,put_keyUser,delete_file
-from application.crypto import generate_keys, getHash, rsaOPRF, aes256,rsaOAEP
-from application.crypto import generate_keys, getHash, rsaOPRF, aes256
+from application.crypto import generate_keys, getHash, rsaOPRF, aes256,rsaOAEP,get_MIME
 import base64
 import binascii
 import json
@@ -76,7 +75,7 @@ def upload_file():
             #Hexadecimal
             Gz_cipher = binascii.hexlify( Gz_cipher)
             Gz_cipher = str( Gz_cipher,'ascii')
-            put_keyUser(user_id=userid,filename=fname,h=Gz_cipher)
+            put_keyUser(user_id=userid,filename=fname,h=Gz_cipher,id_hash=h_fb)
 
             return redirect(url_for('upload_file'))
             
@@ -90,24 +89,18 @@ def delete(file):
     return redirect(url_for('index'))
 
 
-@app.route('/download/<file>')
-def download(file):
-    flash('descargando: '+ file)
-    
-    return redirect(url_for('index'))
-
-@app.route('/prueba/recuperar')
-def recuperar():
-    hash = "xJGJQ16GvH7XOBLBmt8DUWZFJc15Am9EXMIzI1Hc7M0="
-    dataFile = get_file(hash)
-    dataFile = dataFile.to_dict()
-    dataFile["nonce"] = dataFile["nonce"].replace("=","")
-    dataFile["nonce"] += "AAAAAAAAAAA="
-    dataFile.setdefault("key",hash)
-    dataFile = json.dumps(dataFile)
-    print(dataFile)
-    
-    return render_template("recuperar.html",dataFile = dataFile)
+@app.route('/download', methods=['GET','POST'])
+@login_required
+def download():
+    if request.method == 'POST':
+        file = request.json["file"]
+        print("nombre:",file)
+        flash('descargando: '+ file)
+        user_id = current_user.id
+        hash,data_file = get_file(user_id,file)
+        data_file.setdefault("hash",hash)
+        data_file.setdefault("mime",str(get_MIME(data_file["filename"])))
+        return jsonify(result = data_file)
 
 if __name__ == "__main__":
     app.run( ssl_context=('cert.pem', 'key.pem') , debug = True)

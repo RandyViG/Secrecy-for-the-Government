@@ -13,7 +13,8 @@ function decrypt_file(keys,nonce,file,filename,mime){
 
 //Descifrar hash RSA OAEP
 function decifrar_RSAOAEP(data, key) {
-    let dato =  str2ab(window.atob(hexToBase64(data))); //Convertimos a ArrayBuffer el hash cifrado que esta en hexadecimal
+   let dato =  str2ab(window.atob(hexToBase64(data))); //Convertimos a ArrayBuffer el hash cifrado que esta en hexadecimal
+   //dato=_base64ToArrayBuffer(data)
     const binaryDer = str2ab(window.atob(key)); //Convertimos a ArrayBuffer la llave que esta en Base64
     console.log("Longitud llave:"+binaryDer.byteLength);
     console.log("Logitud dato:"+dato.byteLength);
@@ -26,6 +27,7 @@ function decifrar_RSAOAEP(data, key) {
             hash: "SHA-256"
         },true,["decrypt"]).then(function (llave){
             console.log("La llave")
+            console.log(llave.type)
             window.crypto.subtle.decrypt({ //Desciframos el dato con RSA OAEP
                 name: "RSA-OAEP"
             },

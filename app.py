@@ -53,9 +53,10 @@ def upload_file():
             z = rsaOPRF(h)
             h_fb=base64.urlsafe_b64encode( h.digest() ).decode('ascii')
             hash_doc=get_hash(hash=h_fb)
+            Gz = rsaOPRF( h )
             if hash_doc.to_dict() is None: #NO EXISTE
                 #Primer usuario
-                Gz = rsaOPRF( h )
+                
                 nonce,encryptFile = aes256(h=Gz,f=f)
                 #Hexadecimal
                 encryptFile_hexa = binascii.hexlify( encryptFile )
@@ -75,6 +76,7 @@ def upload_file():
             #Hexadecimal
             Gz_cipher = binascii.hexlify( Gz_cipher)
             Gz_cipher = str( Gz_cipher,'ascii')
+            #Gz_cipher = base64.urlsafe_b64encode(Gz_cipher)
             put_keyUser(user_id=userid,filename=fname,h=Gz_cipher,id_hash=h_fb)
 
             return redirect(url_for('upload_file'))
@@ -98,6 +100,7 @@ def download():
         flash('descargando: '+ file)
         user_id = current_user.id
         hash,data_file = get_file(user_id,file)
+        #hash.replace('-','/').replace('-','+')
         data_file.setdefault("hash",hash)
         data_file.setdefault("mime",str(get_MIME(data_file["filename"])))
         return jsonify(result = data_file)

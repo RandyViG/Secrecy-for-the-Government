@@ -75,4 +75,5 @@ def delete_file( user_id , file_name ):
             else:
                 db.document( 'files/{}'.format(file.id) ).delete()
             break
-
+    
+    db.document( 'users/{}/keys/{}'.format(user_id,file_name) ).delete()

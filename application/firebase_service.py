@@ -33,6 +33,16 @@ def put_fileHash(hash,filename,user_id,username,encryptFile,nonce):
 def get_hash(hash):
     return db.collection('files').document(hash).get()
 
+def owner_exist(hash,user_id):
+    ref= db.collection('files').document(hash).collection('owners').stream()
+    for owner in ref:
+        try:
+            owner.to_dict()[user_id]
+            return True
+        except:
+            continue
+    return False
+
 def put_owner(hash,user_id,username):
     hash_ref = db.collection('files').document(hash).collection('owners')
     hash_ref.add({user_id:username}) 

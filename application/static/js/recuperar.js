@@ -1,6 +1,7 @@
 /* Descifrar archivo con AES -> Todos los parámetros como cadena en hexadecimal*/
 function decrypt_file(keys,nonce,file,filename,mime){
-    var key = CryptoJS.enc.Hex.parse(keys);
+    console.log("hola")
+    var key = CryptoJS.enc.Base64.parse(keys);
     var iv = CryptoJS.enc.Hex.parse(nonce+"000000000000000000000000000000000000000000000000");
     var texto = hexToBase64(file);
     var decrypted = CryptoJS.AES.decrypt(texto, key, {
@@ -21,9 +22,10 @@ function decifrar_RSAOAEP(data, key) {
             md: forge.md.sha1.create()
         }
     });
-
-    console.log(window.btoa(t));
-    
+    var h = window.btoa(t);
+    //var cipher = forge.cipher.createCipher('AES-CTR', h);
+    //console.log(window.btoa(t));
+    return h
 }
 
 /*2.-Obtenemos la información del archivo*/
@@ -51,8 +53,8 @@ function leerArchivo(e) {
             success: function (data) {
                 console.log("sucess");
                 console.log("file:"+data.result["filename"]);
-                decifrar_RSAOAEP(data.result["hash"],key); //Descifrar RSA OAEP
-                //decrypt_file(hash,data.result["nonce"],data.result["file"],data.result["filename"],data.result["mime"]);
+                h=decifrar_RSAOAEP(data.result["hash"],key); //Descifrar RSA OAEP
+                decrypt_file(h,data.result["nonce"],data.result["file"],data.result["filename"],data.result["mime"]);
             },
             dataType: "json"
         });

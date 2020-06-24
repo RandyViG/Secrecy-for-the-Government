@@ -14,34 +14,15 @@ function decrypt_file(keys,nonce,file,filename,mime){
 //Descifrar hash RSA OAEP
 function decifrar_RSAOAEP(data, key) {
     console.log(data)
-   //let dato =  str2ab(window.atob(hexToBase64(data))); //Convertimos a ArrayBuffer el hash cifrado que esta en hexadecimal
-   dato=_base64ToArrayBuffer(data)
-    const binaryDer = str2ab(window.atob(key)); //Convertimos a ArrayBuffer la llave que esta en Base64
-    console.log("Longitud llave:"+binaryDer.byteLength);
-    console.log("Logitud dato:"+dato.byteLength);
-    return  window.crypto.subtle.importKey( //Importamos la llave
-        "pkcs8",
-        binaryDer,{
-            name: "RSA-OAEP",
-            modulusLength: 2048,
-            publicExponent: new Uint8Array([1, 0, 1]),
-            hash: "SHA-256"
-        },true,["decrypt"]).then(function (llave){
-            console.log("La llave")
-            console.log(llave.algorithm)
-            console.log(dato)
-            window.crypto.subtle.decrypt({ //Desciframos el dato con RSA OAEP
-                name: "RSA-OAEP"
-            },
-            llave, //from generateKey or importKey above
-            dato //ArrayBuffer of data you want to encrypt
-            ).then(function (decifrado){
-                console.log("llegue");
-                var decifrado_hash = arrayBufferToString(decifrado);
-                console.log("descifrado --->:"+decifrado_hash.length);
-                console.log("El hash descifrado es --> :"+decifrado_hash);
-            });
-        });
+    const privateKey = forge.pki.privateKeyFromPem(key);
+    const t = privateKey.decrypt(forge.util.decode64(data), 'RSA-OAEP', {
+    md: forge.md.sha1.create(),
+        mgf1: {
+            md: forge.md.sha1.create()
+        }
+    });
+
+    console.log(window.btoa(t));
     
 }
 
@@ -56,7 +37,7 @@ function leerArchivo(e) {
             return;
         }
         var key = e.target.result;
-        key = (key.replace("-----BEGIN PRIVATE KEY-----\n","")).replace("\n-----END PRIVATE KEY-----","");
+        //key = (key.replace("-----BEGIN PRIVATE KEY-----\n","")).replace("\n-----END PRIVATE KEY-----","");
         console.log(key);
         var filename = $("#archivos_key").data("filename"); //Obtenemos el nombre del archivo a descargar
         console.log("Tenemos el archivo:"+filename)

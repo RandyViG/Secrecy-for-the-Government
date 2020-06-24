@@ -69,13 +69,11 @@ def upload_file():
             else:
                 put_owner(hash=h_fb,user_id=userid,username=username)
                 #flash('Ya estaba el hash')
-            
+            #flash(base64.b64encode(Gz))
             public_key_user = open('application/data/'+userid+'.pem').read()
             Gz_cipher = rsaOAEP( Gz,public_key_user )
             
-            #Hexadecimal
-            #Gz_cipher = binascii.hexlify( Gz_cipher)
-            #Gz_cipher = str( Gz_cipher,'ascii')
+            #base64
             Gz_cipher = base64.urlsafe_b64encode(Gz_cipher).decode('ascii')
             put_keyUser(user_id=userid,filename=fname,h=Gz_cipher,id_hash=h_fb)
 
@@ -100,7 +98,7 @@ def download():
         flash('descargando: '+ file)
         user_id = current_user.id
         hash,data_file = get_file(user_id,file)
-        
+        #Coreccion base64 urlsafe
         hash=hash.replace('-','+').replace('_','/')
         data_file.setdefault("hash",hash)
         data_file.setdefault("mime",str(get_MIME(data_file["filename"])))

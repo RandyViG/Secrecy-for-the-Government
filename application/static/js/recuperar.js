@@ -64,7 +64,7 @@ function leerArchivo(e) {
 /*1.-Eventento principal, genera el input para la entrada de archivos y añade el EventListener*/
 function recuperar(filename){
     $("#file_name").append('<i class="text-primary">'+ filename + '</i>');
-    $("#get_key").append('<input class="btn btn-outline-primary" id = "archivos_key" type="file" name="file" data-filename="'+filename+'">');
+    $("#get_key").append('<input id = "archivos_key" type="file" name="file" data-filename="'+filename+'"> <label class="btn btn-primary btn-block" for="archivos_key">Selecciona tu clave</label>');
     document.getElementById('archivos_key').addEventListener('change', leerArchivo, false);
     console.log("Listo para enviar:"+filename);
     alert("¡Ingresa tu llave privada!");

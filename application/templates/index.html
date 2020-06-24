@@ -6,7 +6,6 @@
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
 <script src="{{ url_for( 'static' , filename='js/recuperar.js') }}"></script>
-<div id = "get_key"></div>
 <table class="table table-hover">
     <thead>
       <tr>
@@ -18,10 +17,16 @@
     </thead>
     <tbody>
       {% for file in files %}
-        {{ macros.render_file(loop.index,file,delete_form,download_form) }}
+        {{ macros.render_file(loop.index,file) }}
       {% endfor %}
     </tbody>
 </table>
+<div class="container">
+	<div class="row text-center">
+		<div class="col" id="file_name"></div>
+		<div class="col" id="get_key"></div>
+	</div>  
+</div>
 <script src="{{ url_for( 'static' , filename='js/library/aes.js') }}"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/enc-base64.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/enc-utf8.js"></script>

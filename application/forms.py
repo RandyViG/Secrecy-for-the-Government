@@ -6,9 +6,3 @@ class LoginForm(FlaskForm):
     username=StringField('Número de Empleado',validators=[DataRequired()])
     password= PasswordField('Contraseña',validators=[DataRequired()])
     submit= SubmitField('Enviar')
-
-class DeleteFile(FlaskForm):
-    submit = SubmitField('Borrar')
-
-class DownloadFile(FlaskForm):
-    submit = SubmitField('Descargar')

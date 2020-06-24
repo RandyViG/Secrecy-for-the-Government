@@ -1,10 +1,9 @@
 from application import create_app
-from application.forms import DeleteFile, DownloadFile
 from flask import render_template, request, redirect, url_for,flash, make_response, jsonify
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename 
 from Crypto.Hash import SHA256
-from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files,put_keyUser,delete_file
+from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files,put_keyUser,delete_file,owner_exist
 from application.crypto import generate_keys, getHash, rsaOPRF, aes256,rsaOAEP,get_MIME
 import base64
 import binascii
@@ -18,13 +17,9 @@ generate_keys()
 def index():
     username= current_user.name
     files = get_files( current_user.id )
-    delete_form = DeleteFile()
-    download_form = DownloadFile()
     context={
         'username':username,
         'files':files,
-        'delete_form':DeleteFile(),
-        'download_form':DownloadFile(),
     }
     
     return render_template( 'index.html',**context )
@@ -50,13 +45,11 @@ def upload_file():
         else:
             #Convert the hash to base64
             h = getHash(f)
-            z = rsaOPRF(h)
             h_fb=base64.urlsafe_b64encode( h.digest() ).decode('ascii')
             hash_doc=get_hash(hash=h_fb)
             Gz = rsaOPRF( h )
             if hash_doc.to_dict() is None: #NO EXISTE
-                #Primer usuario
-                
+                #Primer usuario      
                 nonce,encryptFile = aes256(h=Gz,f=f)
                 #Hexadecimal
                 encryptFile_hexa = binascii.hexlify( encryptFile )
@@ -67,7 +60,11 @@ def upload_file():
                 
                 #flash('Primer usuario')
             else:
-                put_owner(hash=h_fb,user_id=userid,username=username)
+                if owner_exist(hash=h_fb,user_id=userid):
+                    flash('El archivo '+fname+' ya existe.')
+                    return redirect(url_for('upload_file'))
+                else:
+                    put_owner(hash=h_fb,user_id=userid,username=username)
                 #flash('Ya estaba el hash')
             #flash(base64.b64encode(Gz))
             public_key_user = open('application/data/'+userid+'.pem').read()
@@ -85,6 +82,7 @@ def upload_file():
 def delete(file):
     user_id = current_user.id
     delete_file( user_id , file )
+    flash('Archivo: {}  borrado'.format(file) )
 
     return redirect(url_for('index'))
 
@@ -95,7 +93,6 @@ def download():
     if request.method == 'POST':
         file = request.json["file"]
         print("nombre:",file)
-        flash('descargando: '+ file)
         user_id = current_user.id
         hash,data_file = get_file(user_id,file)
         #Coreccion base64 urlsafe

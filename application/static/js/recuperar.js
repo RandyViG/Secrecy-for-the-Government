@@ -1,6 +1,5 @@
 /* Descifrar archivo con AES -> Todos los parámetros como cadena en hexadecimal*/
 function decrypt_file(keys,nonce,file,filename,mime){
-    console.log("hola")
     var key = CryptoJS.enc.Base64.parse(keys);
     var iv = CryptoJS.enc.Hex.parse(nonce+"000000000000000000000000000000000000000000000000");
     var texto = hexToBase64(file);
@@ -13,7 +12,7 @@ function decrypt_file(keys,nonce,file,filename,mime){
 }
 
 //Descifrar hash RSA OAEP
-function decifrar_RSAOAEP(data, key) {
+function decrypt_RSAOAEP(data, key) {
     console.log(data)
     const privateKey = forge.pki.privateKeyFromPem(key);
     const t = privateKey.decrypt(forge.util.decode64(data), 'RSA-OAEP', {
@@ -23,8 +22,7 @@ function decifrar_RSAOAEP(data, key) {
         }
     });
     var h = window.btoa(t);
-    //var cipher = forge.cipher.createCipher('AES-CTR', h);
-    //console.log(window.btoa(t));
+
     return h
 }
 
@@ -39,12 +37,13 @@ function leerArchivo(e) {
             return;
         }
         var key = e.target.result;
-        //key = (key.replace("-----BEGIN PRIVATE KEY-----\n","")).replace("\n-----END PRIVATE KEY-----","");
         console.log(key);
         var filename = $("#archivos_key").data("filename"); //Obtenemos el nombre del archivo a descargar
         console.log("Tenemos el archivo:"+filename)
         $('#get_key').css('background',"transparent");
         $("#get_key").empty(); //Quitamos el input generado del div
+        $('#file_name').css('background',"transparent");
+        $("#file_name").empty(); //Quitamos el input generado del div
         $.ajax({ //Solicitamos los datos del archivo a descargar
             type: "POST",
             contentType: "application/json; charset=utf-8",
@@ -53,7 +52,7 @@ function leerArchivo(e) {
             success: function (data) {
                 console.log("sucess");
                 console.log("file:"+data.result["filename"]);
-                h=decifrar_RSAOAEP(data.result["hash"],key); //Descifrar RSA OAEP
+                h=decrypt_RSAOAEP(data.result["hash"],key); //Descifrar RSA OAEP
                 decrypt_file(h,data.result["nonce"],data.result["file"],data.result["filename"],data.result["mime"]);
             },
             dataType: "json"
@@ -62,10 +61,10 @@ function leerArchivo(e) {
     lector.readAsText(archivo);
 }
 
-
 /*1.-Eventento principal, genera el input para la entrada de archivos y añade el EventListener*/
 function recuperar(filename){
-    $("#get_key").append('<i style = "color: blue;float: left;font-family: Verdana;">'+ filename + '</i><input style = "float: left;" id = "archivos_key" type="file" name="file" data-filename="'+filename+'">');
+    $("#file_name").append('<i class="text-primary">'+ filename + '</i>');
+    $("#get_key").append('<input class="btn btn-outline-primary" id = "archivos_key" type="file" name="file" data-filename="'+filename+'">');
     document.getElementById('archivos_key').addEventListener('change', leerArchivo, false);
     console.log("Listo para enviar:"+filename);
     alert("¡Ingresa tu llave privada!");

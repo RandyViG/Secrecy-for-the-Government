@@ -4,11 +4,32 @@
     {{ super() }}
     <title>
         {% block title %} Cryptography {% endblock %}
-    </title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/sb-admin-2.css')}}">
+	</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/sb-admin-2.css')}}">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 {% endblock %}
 
 {% block body %}
+		<div class="container">
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">¡Ingresa tu llave privada!</h4>
+				</div>
+				<div class="modal-body">
+					<input id = "files" type="file" name="file" data-filename=""> <label class="btn btn-outline-primary" for="files">Selecciona tu clave</label>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+				</div>
+				</div>
+				
+			</div>
+			</div>
+		</div>
+
     <div id="wrapper">
 		{% if username %}
 			<!-- Sidebar -->
@@ -110,7 +131,7 @@
 
     <!-- scripts -->
     {% block scripts %}
-        {{ super() }}
+		{{ super() }}
     {% endblock %}
 	<!-- scripts -->
 	

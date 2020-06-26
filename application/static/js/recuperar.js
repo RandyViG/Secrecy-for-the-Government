@@ -38,12 +38,9 @@ function leerArchivo(e) {
         }
         var key = e.target.result;
         console.log(key);
-        var filename = $("#archivos_key").data("filename"); //Obtenemos el nombre del archivo a descargar
+        var filename = $("#files").data("filename"); //Obtenemos el nombre del archivo a descargar
         console.log("Tenemos el archivo:"+filename)
-        $('#get_key').css('background',"transparent");
-        $("#get_key").empty(); //Quitamos el input generado del div
-        $('#file_name').css('background',"transparent");
-        $("#file_name").empty(); //Quitamos el input generado del div
+        document.getElementById('files').setAttribute("data-filename", "");
         $.ajax({ //Solicitamos los datos del archivo a descargar
             type: "POST",
             contentType: "application/json; charset=utf-8",
@@ -63,10 +60,8 @@ function leerArchivo(e) {
 
 /*1.-Eventento principal, genera el input para la entrada de archivos y añade el EventListener*/
 function recuperar(filename){
-    $("#file_name").append('<i class="text-primary">'+ filename + '</i>');
-    $("#get_key").append('<input id = "files" type="file" name="file" data-filename="'+filename+'"> <label class="btn btn-primary btn-block" for="files">Selecciona tu clave</label>');
+    $("#myModal").modal();
+    document.getElementById('files').setAttribute("data-filename", filename);
     document.getElementById('files').addEventListener('change', leerArchivo, false);
     console.log("Listo para enviar:"+filename);
-    alert("¡Ingresa tu llave privada!");
-    event.preventDefault();
 }

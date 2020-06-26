@@ -38,9 +38,9 @@ function leerArchivo(e) {
         }
         var key = e.target.result;
         console.log(key);
-        var filename = $("#files").data("filename"); //Obtenemos el nombre del archivo a descargar
+        var filename = $("#file_key").data("filename"); //Obtenemos el nombre del archivo a descargar
         console.log("Tenemos el archivo:"+filename)
-        document.getElementById('files').setAttribute("data-filename", "");
+        document.getElementById('file_key').setAttribute("data-filename", "");
         $.ajax({ //Solicitamos los datos del archivo a descargar
             type: "POST",
             contentType: "application/json; charset=utf-8",
@@ -61,7 +61,7 @@ function leerArchivo(e) {
 /*1.-Eventento principal, genera el input para la entrada de archivos y añade el EventListener*/
 function recuperar(filename){
     $("#myModal").modal();
-    document.getElementById('files').setAttribute("data-filename", filename);
-    document.getElementById('files').addEventListener('change', leerArchivo, false);
+    document.getElementById('file_key').setAttribute("data-filename", filename);
+    document.getElementById('file_key').addEventListener('change', leerArchivo, false);
     console.log("Listo para enviar:"+filename);
 }

@@ -11,24 +11,6 @@
 {% endblock %}
 
 {% block body %}
-		<div class="container">
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">¡Ingresa tu llave privada!</h4>
-				</div>
-				<div class="modal-body">
-					<input id = "file_key" type="file" name="file" data-filename=""> <label class="btn btn-outline-primary" for="file_key">Selecciona tu clave</label>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-				</div>
-				</div>
-				
-			</div>
-			</div>
-		</div>
 
     <div id="wrapper">
 		{% if username %}
@@ -128,6 +110,12 @@
 		</div>
 		<!-- End of Content Wrapper-->
     </div>
+
+	<!-- Modals -->
+	{% block modals %}
+		{% include 'modals.html' %}
+	{% endblock %}
+	<!-- /Modals -->
 
     <!-- scripts -->
     {% block scripts %}

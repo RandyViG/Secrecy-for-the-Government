@@ -29,9 +29,7 @@ def index():
 def upload_file():
     username= current_user.name
     userid=current_user.id
-    context={
-        'username':username
-    }
+    
     if request.method == 'POST':
         if not 'file' in request.files:
             return 'No file part in the form'
@@ -76,7 +74,7 @@ def upload_file():
 
             return redirect(url_for('upload_file'))
             
-    return render_template( 'upload.html' ,**context)
+    return redirect(url_for('index'))
 
 @app.route('/delete/<file>')
 def delete(file):

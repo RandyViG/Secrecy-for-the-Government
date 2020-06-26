@@ -17,9 +17,11 @@ generate_keys()
 def index():
     username= current_user.name
     files = get_files( current_user.id )
+    root = True if current_user.id == '0001' else False
     context={
         'username':username,
         'files':files,
+        'root':root
     }
     
     return render_template( 'index.html',**context )
@@ -29,7 +31,7 @@ def index():
 def upload_file():
     username= current_user.name
     userid=current_user.id
-    
+
     if request.method == 'POST':
         if not 'file' in request.files:
             return 'No file part in the form'

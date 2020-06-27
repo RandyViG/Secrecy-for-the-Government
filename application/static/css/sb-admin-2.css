@@ -10249,7 +10249,7 @@ a:focus {
 
 @media (min-width: 768px) {
   .sidebar {
-    width: 14rem !important;
+    width: 25rem;
   }
   .sidebar .nav-item .collapse {
     position: relative;
@@ -11018,7 +11018,7 @@ form.user .btn-user {
 footer.sticky-footer {
   padding: 2rem 0;
   flex-shrink: 0;
-  width: 85%;
+  width: 87%;
 	position: absolute;
 	bottom: 0;
 }

@@ -26,6 +26,9 @@ def get_users():
 def get_user(user_id):
     return db.collection('users').document(user_id).get()
 
+def put_user( user_id , username , password ):
+    db.document( 'users/{}'.format(user_id) ).set( {'user':username,'password':password} )
+
 def put_keyUser(user_id,filename,h,id_hash):
     ref = db.collection('users').document(user_id).collection('keys').document(filename)
     ref.set({'hash':h,'id_hash':id_hash})

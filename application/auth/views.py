@@ -5,7 +5,7 @@ from application.models import UserModel,UserData
 from flask_login import login_user, login_required, logout_user, current_user
 from application.firebase_service import get_user, get_users
 from os.path import isfile
-#from werkzeug.security import generate_password_hash,check_password_hash
+from werkzeug.security import check_password_hash
 
 def existKey(user_id):
     #path = '.\\application\\data' + user_id + '.txt'
@@ -30,7 +30,7 @@ def login():
         if user_doc.to_dict() is not None:
             password_from_db = user_doc.to_dict()['password']
 
-            if password == password_from_db:
+            if check_password_hash( password_from_db , password ):
                 user_name = user_doc.to_dict()['user']
                 user_data = UserData( user_id , user_name , password )
                 user = UserModel( user_data )

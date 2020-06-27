@@ -1,6 +1,7 @@
 from application import create_app
 from flask import render_template, request, redirect, url_for,flash, make_response, jsonify
 from flask_login import login_required, current_user
+from application.forms import AddUser
 from werkzeug.utils import secure_filename 
 from Crypto.Hash import SHA256
 from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files,put_keyUser,delete_file,owner_exist
@@ -21,7 +22,8 @@ def index():
     context={
         'username':username,
         'files':files,
-        'root':root
+        'root':root,
+        'add_user':AddUser()
     }
     
     return render_template( 'index.html',**context )

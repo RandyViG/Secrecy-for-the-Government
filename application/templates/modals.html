@@ -1,3 +1,5 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+
 <div class="container">
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -44,6 +46,46 @@
                                 </div>
                                 <div class="form-group col-12">
                                     <button type="submit" class="btn btn-primary btn-block"> Subir </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">Cancelar</button>
+        </div>
+        </div>
+        
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="modal fade" id="modalUsers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Agregar Usuario</h4>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid mt-5">
+                <div class="row">
+                    <div class="col-8 offset-2">
+                        <form action="/admin/add_user" method="POST" enctype="multipart/form-data">
+                            <div class="form-row align-items-center">
+                                <div class="form-group col-12">
+                                    {{ wtf.form_field( add_user.user_id , class='form-control form-control-user', type='text' , placeholder='Ingresa el número de empleado' ) }}
+                                </div>
+                                <div class="form-group col-12">
+                                    {{ wtf.form_field( add_user.username , class='form-control form-control-user', type='text' , placeholder='Ingresa el nombre del empleado' ) }}
+                                </div>
+                                <div class="form-group col-12">
+                                    {{ wtf.form_field( add_user.password , class='form-control form-control-user', type='password' , placeholder='Ingresa la contraseña del empleado' ) }}
+                                </div>
+                                <div class="form-group col-12">
+                                    {{ wtf.form_field( add_user.submit , class='btn btn-primary btn-user btn-block', type='submit' ) }}
                                 </div>
                             </div>
                         </form>

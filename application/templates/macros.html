@@ -15,6 +15,6 @@
         <th scope="row">{{id}}</th>
         <td>{{name}}</td>
         <td class="text-center"><a href="#"> <img id="icon-download" src="{{ url_for( 'static' , filename='images/config.png' ) }}" > </a></td>
-        <td class="text-center"><a href="#"> <img id="icon-delete" src="{{ url_for( 'static' , filename='images/delete.png' ) }}" > </a></td>
+        <td class="text-center"><a href="{{ url_for( 'admin.delete_users' , id = id ) }}"> <img id="icon-delete" src="{{ url_for( 'static' , filename='images/delete.png' ) }}" > </a></td>
     </tr>
 {% endmacro %}

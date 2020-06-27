@@ -1,3 +1,4 @@
+from os import remove
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -32,6 +33,21 @@ def put_user( user_id , username , password ):
 def put_keyUser(user_id,filename,h,id_hash):
     ref = db.collection('users').document(user_id).collection('keys').document(filename)
     ref.set({'hash':h,'id_hash':id_hash})
+
+def delete_user( user_id ):
+    delete_keys( user_id )
+    db.document( 'users/{}'.format(user_id) ).delete()
+    delete_files_from_user( user_id )
+    remove( './application/data/{}.pem'.format(user_id) )
+
+def delete_keys( user_id ):
+    keys_id = [ ]
+    keys = db.collection( 'users/{}/keys'.format(user_id) ).stream()
+    for key in keys:
+        keys_id.append( key.id )
+
+    for key in keys_id:
+        db.document( 'users/{}/keys/{}'.format(user_id,key) ).delete()
 
 def put_fileHash(hash,filename,user_id,username,encryptFile,nonce):
     fileHash_ref = db.collection('files').document(hash).collection('owners')
@@ -91,7 +107,28 @@ def delete_file( user_id , file_name ):
             if cont > 1 :
                 db.document( 'files/{}/owners/{}'.format(file.id,id) ).delete()
             else:
+                db.document( 'files/{}/owners/{}'.format(file.id,id) ).delete()
                 db.document( 'files/{}'.format(file.id) ).delete()
             break
     
     db.document( 'users/{}/keys/{}'.format(user_id,file_name) ).delete()
+
+def delete_files_from_user( user_id ):
+    files = db.collection('files').stream()
+    for file in files:
+        owners = db.collection( 'files/{}/owners'.format(file.id) ).stream()
+        cont = 0
+        id = 0
+        for owner in owners:
+            cont += 1
+            try:
+                owner.to_dict()[user_id]
+                id = owner.id
+            except:
+                continue
+        if cont > 1 :
+            db.document( 'files/{}/owners/{}'.format(file.id,id) ).delete()
+        else:
+            db.document( 'files/{}/owners/{}'.format(file.id,id) ).delete()
+            db.document( 'files/{}'.format(file.id) ).delete()
+        break

@@ -16,7 +16,12 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 def get_users():
-    return db.collection('users').get()
+    users_list = [ ]
+    users = db.collection('users').stream()
+    for user in users:
+        users_list.append( ( user.id , user.to_dict()['user'] ) )
+    
+    return users_list
 
 def get_user(user_id):
     return db.collection('users').document(user_id).get()

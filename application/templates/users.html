@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %}
+
+{% block  content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col" class="text-center">Modificar</th>
+                    <th scope="col" class="text-center">Eliminar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        {{ macros.render_users( user[0] , user[1] ) }}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4 offset-4 text-center">
+            <a href="#"><img id="icon-download" src="{{ url_for( 'static' , filename='images/add.png' ) }}" ></a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -9,3 +9,12 @@
         <td class="text-center"><a href="{{ url_for( 'delete' , file=file ) }}"> <img id="icon-delete" src="{{ url_for( 'static' , filename='images/delete.png' ) }}" > </a></td>
     </tr>
 {% endmacro %}
+
+{% macro render_users(id,name) %}
+    <tr>
+        <th scope="row">{{id}}</th>
+        <td>{{name}}</td>
+        <td class="text-center"><a href="#"> <img id="icon-download" src="{{ url_for( 'static' , filename='images/config.png' ) }}" > </a></td>
+        <td class="text-center"><a href="#"> <img id="icon-delete" src="{{ url_for( 'static' , filename='images/delete.png' ) }}" > </a></td>
+    </tr>
+{% endmacro %}

@@ -3,7 +3,7 @@ from application.forms import LoginForm
 from . import auth
 from application.models import UserModel,UserData
 from flask_login import login_user, login_required, logout_user, current_user
-from application.firebase_service import get_user
+from application.firebase_service import get_user, get_users
 from os.path import isfile
 #from werkzeug.security import generate_password_hash,check_password_hash
 
@@ -57,12 +57,24 @@ def logout():
 def keygen():
     if request.method == 'POST':
         k = request.json["k"]
-        username = current_user.id
-        context = {'username':username}
         print("k:",k)
         with open("./application/data/"+str(current_user.id)+".pem","w") as f:
             aux='-----BEGIN PUBLIC KEY-----\n'+k+'\n-----END PUBLIC KEY-----'
             f.write(aux)
         f.close()
-        #return redirect(url_for('index'))
+
     return render_template('keygen.html')
+
+@auth.route('/users', methods=['GET','POST'])
+@login_required
+def users():
+    username = current_user.name
+    root = True if current_user.id == '0001' else False
+    users = get_users()
+    context={
+        'username': username,
+        'users':users,
+        'root': root
+    }
+
+    return render_template( 'users.html',**context )

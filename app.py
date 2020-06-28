@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 from Crypto.Hash import SHA256
 from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files,put_keyUser,delete_file,owner_exist, put_user
 from application.crypto import generate_keys, getHash, rsaOPRF, aes256,rsaOAEP,get_MIME
+from werkzeug.security import generate_password_hash
 import base64
 import binascii
 import json
@@ -128,7 +129,8 @@ def settings():
     if settings_form.is_submitted():
         username = settings_form.username.data
         password = settings_form.password.data
-        put_user( user_id , username , password )
+        password_hash = generate_password_hash( password )
+        put_user( user_id , username , password_hash )
         flash('Tus cambios se realizaron con éxito')
     return redirect(url_for('index'))
 

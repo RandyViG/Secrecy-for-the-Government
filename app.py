@@ -1,10 +1,10 @@
 from application import create_app
 from flask import render_template, request, redirect, url_for,flash, make_response, jsonify
 from flask_login import login_required, current_user
-from application.forms import AddUser
+from application.forms import AddUser, Setting
 from werkzeug.utils import secure_filename 
 from Crypto.Hash import SHA256
-from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files,put_keyUser,delete_file,owner_exist
+from application.firebase_service import put_fileHash,get_hash,put_owner,get_file,get_files,put_keyUser,delete_file,owner_exist, put_user
 from application.crypto import generate_keys, getHash, rsaOPRF, aes256,rsaOAEP,get_MIME
 import base64
 import binascii
@@ -19,11 +19,12 @@ def index():
     username= current_user.name
     files = get_files( current_user.id )
     root = True if current_user.id == '0001' else False
-    context={
-        'username':username,
-        'files':files,
-        'root':root,
-        'add_user':AddUser()
+    context = {
+        'username': username,
+        'files': files,
+        'root': root,
+        'add_user': AddUser(),
+        'settings': Setting()  
     }
     
     return render_template( 'index.html',**context )
@@ -101,7 +102,20 @@ def download():
         hash=hash.replace('-','+').replace('_','/')
         data_file.setdefault("hash",hash)
         data_file.setdefault("mime",str(get_MIME(data_file["filename"])))
+
         return jsonify(result = data_file)
+
+@app.route('/settings', methods=['GET','POST'])
+@login_required
+def settings():
+    user_id = current_user.id
+    settings_form = Setting()
+    if settings_form.is_submitted():
+        username = settings_form.username.data
+        password = settings_form.password.data
+        put_user( user_id , username , password )
+        flash('Tus cambios se realizaron con éxito')
+    return redirect(url_for('index'))
 
 if __name__ == "__main__":
     app.run( ssl_context=('cert.pem', 'key.pem') , debug = True)

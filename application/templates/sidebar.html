@@ -41,13 +41,24 @@
 			</a>
 		</li>
 	{% endif %}
-
+	
 	<!-- Nav Item - Tables -->
-	<li class="nav-item">
-		<a class="nav-link" href="#" >
+	<li class="nav-item dropdown">
+		<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
 			<i class="fas fa-fw fa-table"></i>
 			<span>Configuración</span>
 		</a>
+		<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in ml-3 mr-3" aria-labelledby="userDropdown">
+			<a class="dropdown-item"  data-toggle="modal" data-target="#settingsUser" href="#settingsUser">
+			  	<i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+			  	Usuario y contraseña
+			</a>
+			<a class="dropdown-item"  data-toggle="modal" data-target="#newKeys" href="newKeys">
+			  	<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+			  	Claves
+			</a>
+		  </div>
 	</li>
 
 	<!-- Divider -->

@@ -1,5 +1,5 @@
 from . import admin
-from application.forms import AddUser
+from application.forms import AddUser,Setting
 from application.firebase_service import get_users,get_user,put_user,delete_user
 from flask import render_template, session, redirect, flash, url_for, request
 from flask_login import login_user, login_required, logout_user, current_user
@@ -15,7 +15,8 @@ def users():
         'username': username,
         'users': users,
         'root': root,
-        'add_user': AddUser()
+        'add_user': AddUser(),
+        'settings': Setting()
     }
 
     return render_template( 'users.html',**context )

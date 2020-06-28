@@ -12,3 +12,8 @@ class AddUser(FlaskForm):
     username = StringField('Nombre de Empleado',validators=[DataRequired()])
     password = PasswordField('Contraseña',validators=[DataRequired()])
     submit = SubmitField('Enviar')    
+
+class Setting(FlaskForm):
+    username = StringField('Nombre',validators=[DataRequired()])
+    password = PasswordField('Contraseña',validators=[DataRequired()])
+    submit = SubmitField('Restablecer')

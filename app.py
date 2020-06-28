@@ -51,6 +51,21 @@ def upload_file():
             h_fb=base64.urlsafe_b64encode( h.digest() ).decode('ascii')
             hash_doc=get_hash(hash=h_fb)
             Gz = rsaOPRF( h )
+            if Gz is None:
+                username= current_user.name
+                files = get_files( current_user.id )
+                root = True if current_user.id == '0001' else False
+                band= True
+                context = {
+                    'username': username,
+                    'files': files,
+                    'root': root,
+                    'add_user': AddUser(),
+                    'settings': Setting(),  
+                    'band': band
+                }
+                return render_template( 'index.html',**context )
+                
             if hash_doc.to_dict() is None: #NO EXISTE
                 #Primer usuario      
                 nonce,encryptFile = aes256(h=Gz,f=f)

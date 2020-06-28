@@ -37,7 +37,7 @@ def rsaOPRF(h):
     aux=pow(z,e,n)%n
     if aux != h_aux:
         return None
-    
+    #return None
     return getHash(z.to_bytes(256,byteorder='little')).digest()
 
 def aes256(h,f):

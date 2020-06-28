@@ -6,6 +6,14 @@
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
 <script src="{{ url_for( 'static' , filename='js/recuperar.js') }}"></script>
+{% if band %}
+<script>
+  $(document).ready(function()
+  {
+     $("#errorModal").modal();
+  });
+</script>
+{% endif %}
 <table class="table table-hover">
     <thead>
       <tr>

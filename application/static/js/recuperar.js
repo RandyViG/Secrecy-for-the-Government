@@ -15,13 +15,20 @@ function decrypt_file(keys,nonce,file,filename,mime){
 function decrypt_RSAOAEP(data, key) {
     console.log(data)
     const privateKey = forge.pki.privateKeyFromPem(key);
-    const t = privateKey.decrypt(forge.util.decode64(data), 'RSA-OAEP', {
-    md: forge.md.sha1.create(),
-        mgf1: {
-            md: forge.md.sha1.create()
-        }
-    });
-    var h = window.btoa(t);
+    try {
+        const t = privateKey.decrypt(forge.util.decode64(data), 'RSA-OAEP', {
+            md: forge.md.sha1.create(),
+                mgf1: {
+                    md: forge.md.sha1.create()
+                }
+            });
+            var h = window.btoa(t);
+            return h
+      } catch (error) {
+        $("#errorRSA").modal();
+      }
+      
+    
 
     return h
 }
@@ -64,4 +71,9 @@ function recuperar(filename){
     document.getElementById('file_key').setAttribute("data-filename", filename);
     document.getElementById('file_key').addEventListener('change', leerArchivo, false);
     console.log("Listo para enviar:"+filename);
+}
+
+function borrar(filename){
+    document.getElementById('error_delete').setAttribute("href","/delete/"+filename+"");
+    $("#confirmDeleteModal").modal();
 }

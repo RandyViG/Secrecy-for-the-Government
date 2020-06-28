@@ -1,6 +1,6 @@
 from . import admin
 from application.forms import AddUser,Setting
-from application.firebase_service import get_users,get_user,put_user,delete_user
+from application.firebase_service import get_users,get_user,put_user,delete_user, delete_keys, delete_files_from_user
 from flask import render_template, session, redirect, flash, url_for, request
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash
@@ -46,3 +46,12 @@ def add_user():
             flash('El usuario ya existe')
 
     return redirect( url_for('admin.users') )
+
+@admin.route('/restore')
+@login_required
+def restore_key():
+    user_id = current_user.id
+    delete_keys( user_id )
+    delete_files_from_user( user_id )
+    
+    return render_template('keygen.html')

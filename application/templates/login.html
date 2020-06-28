@@ -15,6 +15,17 @@
 
 {% block body %}
     <body class="bg-gradient-primary">
+
+        <!-- flash handler -->
+		{%for message in get_flashed_messages()%}
+		<div class="alert alert-warning alert-dismissible">
+			<button type="button" 
+				data-dismiss="alert"
+				class="close">&times;</button>
+				{{message}}
+		</div>
+		{%endfor%}
+		<!-- /flash handler -->
         
         <!-- container -->
         <div class="container">

@@ -130,6 +130,7 @@ def settings():
         password = settings_form.password.data
         put_user( user_id , username , password )
         flash('Tus cambios se realizaron con éxito')
+    
     return redirect(url_for('index'))
 
 if __name__ == "__main__":

@@ -72,8 +72,3 @@ function recuperar(filename){
     document.getElementById('file_key').addEventListener('change', leerArchivo, false);
     console.log("Listo para enviar:"+filename);
 }
-
-function borrar(filename){
-    document.getElementById('error_delete').setAttribute("href","/delete/"+filename+"");
-    $("#confirmDeleteModal").modal();
-}

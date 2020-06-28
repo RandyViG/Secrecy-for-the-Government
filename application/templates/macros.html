@@ -14,7 +14,7 @@
     <tr>
         <th scope="row">{{id}}</th>
         <td>{{name}}</td>
-        <td class="text-center"><a data-toggle="modal" data-target="#settingsUser" href="#settingsUser"> <img id="icon-download" src="{{ url_for( 'static' , filename='images/config.png' ) }}" > </a></td>
+        <td class="text-center"><a onclick = "cambiar('{{id}}');" role="button"> <img id="icon-download" src="{{ url_for( 'static' , filename='images/config.png' ) }}" > </a></td>
         <td class="text-center"><a href="{{ url_for( 'admin.delete_users' , id = id ) }}"> <img id="icon-delete" src="{{ url_for( 'static' , filename='images/delete.png' ) }}" > </a></td>
     </tr>
 {% endmacro %}

@@ -6,6 +6,7 @@
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
 <script src="{{ url_for( 'static' , filename='js/recuperar.js') }}"></script>
+<script src="{{ url_for( 'static' , filename='js/parameters.js') }}"></script>
 {% if band %}
 <script>
   $(document).ready(function()

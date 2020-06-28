@@ -207,6 +207,49 @@
 </div>
 <!-- Setting Modal -->
 
+<script src="{{ url_for( 'static' , filename='js/parameters.js') }}"></script>
+<!-- Change Modal -->
+<div class="container">
+    <div class="modal fade" id="changeUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Configuración</h4>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid mt-5">
+                <div class="row">
+                    <div class="col-8 offset-2">
+                        <form id="change_form" action="" method="POST" enctype="multipart/form-data">
+                            <div class="form-row align-items-center">
+                                <div class="form-group col-12 text-center">
+                                    <h3> Restablecer valores </h3>
+                                </div>
+                                <div class="form-group col-12">
+                                    {{ wtf.form_field( settings.username , class='form-control form-control-user', type='text' , placeholder='Ingresa el nuevo nombre' ) }}
+                                </div>
+                                <div class="form-group col-12">
+                                    {{ wtf.form_field( settings.password , class='form-control form-control-user', type='password' , placeholder='Ingresa tu nueva contraseña ' ) }}
+                                </div>
+                                <div class="form-group col-12">
+                                    {{ wtf.form_field( settings.submit , class='btn btn-primary btn-user btn-block', type='submit' ) }}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">Cancelar</button>
+        </div>
+        </div>
+        
+    </div>
+    </div>
+</div>
+<!-- Change Modal -->
+
 <!-- Keys Modal -->
 <div class="container">
     <div class="modal fade" id="newKeys" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

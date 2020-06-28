@@ -64,17 +64,3 @@ def keygen():
         f.close()
 
     return render_template('keygen.html')
-
-@auth.route('/users', methods=['GET','POST'])
-@login_required
-def users():
-    username = current_user.name
-    root = True if current_user.id == '0001' else False
-    users = get_users()
-    context={
-        'username': username,
-        'users':users,
-        'root': root
-    }
-
-    return render_template( 'users.html',**context )

@@ -3,6 +3,7 @@ from application.forms import AddUser,Setting
 from application.firebase_service import get_users,get_user,put_user,delete_user, delete_keys, delete_files_from_user
 from flask import render_template, session, redirect, flash, url_for, request
 from flask_login import login_user, login_required, logout_user, current_user
+from application.forms import Setting
 from werkzeug.security import generate_password_hash
 
 @admin.route('/users')
@@ -46,6 +47,18 @@ def add_user():
             flash('El usuario ya existe')
 
     return redirect( url_for('admin.users') )
+
+@admin.route('/changeData/<user_id>',methods=['GET','POST'])
+@login_required
+def changeData(user_id):
+    settings_form = Setting()
+    if settings_form.is_submitted():
+        username = settings_form.username.data
+        password = settings_form.password.data
+        password_hash = generate_password_hash( password )
+        put_user( user_id , username , password_hash )
+        flash('Tus cambios se realizaron con éxito')
+    return redirect(url_for('admin.users'))
 
 @admin.route('/restore')
 @login_required

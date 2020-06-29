@@ -58,6 +58,7 @@ def changeData(user_id):
         password_hash = generate_password_hash( password )
         put_user( user_id , username , password_hash )
         flash('Tus cambios se realizaron con éxito')
+    
     return redirect(url_for('admin.users'))
 
 @admin.route('/restore')
@@ -68,3 +69,17 @@ def restore_key():
     delete_files_from_user( user_id )
     
     return render_template('keygen.html')
+
+@admin.route('/settings', methods=['GET','POST'])
+@login_required
+def settings():
+    user_id = current_user.id
+    settings_form = Setting()
+    if settings_form.is_submitted():
+        username = settings_form.username.data
+        password = settings_form.password.data
+        password_hash = generate_password_hash( password )
+        put_user( user_id , username , password_hash )
+        flash('Tus cambios se realizaron con éxito')
+    
+    return redirect(url_for('index'))

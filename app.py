@@ -121,19 +121,5 @@ def download():
 
         return jsonify(result = data_file)
 
-@app.route('/settings', methods=['GET','POST'])
-@login_required
-def settings():
-    user_id = current_user.id
-    settings_form = Setting()
-    if settings_form.is_submitted():
-        username = settings_form.username.data
-        password = settings_form.password.data
-        password_hash = generate_password_hash( password )
-        put_user( user_id , username , password_hash )
-        flash('Tus cambios se realizaron con éxito')
-    
-    return redirect(url_for('index'))
-
 if __name__ == "__main__":
     app.run( ssl_context=('cert.pem', 'key.pem') , debug = True)

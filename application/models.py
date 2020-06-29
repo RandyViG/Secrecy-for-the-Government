@@ -1,11 +1,5 @@
 from flask_login import UserMixin
 from .firebase_service import get_user
-#from .firestore_service import get_user
-user={
-    'Pao': 'Paola',
-    'Ran': 'Randy',
-    'Bran': 'Brandon'
-}
 
 class UserData:
     def __init__( self , userid , username , password ):

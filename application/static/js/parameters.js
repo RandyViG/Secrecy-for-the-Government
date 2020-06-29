@@ -9,3 +9,7 @@ function borrar(filename){
     document.getElementById('error_delete').setAttribute("href","/delete/"+filename+"");
     $("#confirmDeleteModal").modal();
 }
+
+document.getElementById('files').onchange = function() {
+    document.getElementById('nameFile').innerHTML = document.getElementById('files').files[0].name;
+}

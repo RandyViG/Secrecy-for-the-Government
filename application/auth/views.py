@@ -1,11 +1,11 @@
-from flask import render_template, session, redirect, flash, url_for, request
+from flask import render_template, redirect, flash, url_for, request
 from application.forms import LoginForm
 from . import auth
 from application.models import UserModel,UserData
-from flask_login import login_user, login_required, logout_user, current_user
-from application.firebase_service import get_user, get_users
-from os.path import isfile
+from application.firebase_service import get_user
 from werkzeug.security import check_password_hash
+from os.path import isfile
+from flask_login import login_user, login_required, logout_user, current_user
 
 def existKey(user_id):
     #path = '.\\application\\data' + user_id + '.txt'

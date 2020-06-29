@@ -38,7 +38,10 @@ def delete_user( user_id ):
     delete_keys( user_id )
     db.document( 'users/{}'.format(user_id) ).delete()
     delete_files_from_user( user_id )
-    remove( './application/data/{}.pem'.format(user_id) )
+    try:
+        remove( './application/data/{}.pem'.format(user_id) )
+    except:
+        print('No esta registrada la clave publica')
 
 def delete_keys( user_id ):
     keys_id = [ ]

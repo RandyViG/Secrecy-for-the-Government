@@ -101,7 +101,10 @@
                         <form action="/upload" method="POST" enctype="multipart/form-data">
                             <div class="form-row align-items-center">
                                 <div class="form-group col-12">
-                                    <input type="file" name="file" id="files">
+                                    <label id="nameFile"></label>
+                                </div>
+                                <div class="form-group col-12">
+                                    <input type="file" required name="file" id="files">
                                     <label class="btn btn-outline-primary btn-block" for="files"> Selecciona un archivo </label>
                                 </div>
                                 <div class="form-group col-12">

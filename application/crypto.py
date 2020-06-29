@@ -53,11 +53,6 @@ def rsaOAEP(h,key):
     cipher = PKCS1_OAEP.new( public_key )
     cipher_file = cipher.encrypt( h )
     return cipher_file
-    #print("Cifrado:",base64.urlsafe_b64encode( cipher_file ).decode('ascii'),"\n")
-    # Decrypt
-    #decipher = PKCS1_OAEP.new( key )
-    #file_content = decipher.decrypt( cipher_file )
-    #print("Después:",base64.urlsafe_b64encode( file_content ).decode('ascii'),"\n")
 
 def generate_keys():
     private = './application/server/privateServer.pem'

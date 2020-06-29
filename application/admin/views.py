@@ -1,10 +1,10 @@
 from . import admin
 from application.forms import AddUser,Setting
-from application.firebase_service import get_users,get_user,put_user,delete_user, delete_keys, delete_files_from_user
-from flask import render_template, session, redirect, flash, url_for, request
-from flask_login import login_user, login_required, logout_user, current_user
+from flask import render_template, redirect, flash, url_for
+from flask_login import login_required, current_user
 from application.forms import Setting
 from werkzeug.security import generate_password_hash
+from application.firebase_service import get_users,get_user,put_user,delete_user, delete_keys, delete_files_from_user
 
 @admin.route('/users')
 @login_required
@@ -36,7 +36,6 @@ def add_user():
         user_id = user_form.user_id.data
         user_name = user_form.username.data
         password = user_form.password.data
-
         user_doc = get_user( user_id )
         if user_doc.to_dict() is None:
             password_hash = generate_password_hash( password )

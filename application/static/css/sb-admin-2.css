@@ -9950,6 +9950,10 @@ a:focus {
   height: 2rem;
   width: 2rem;
 }
+.img-inicio{
+  height: 40px;
+  width: 40px;
+}
 
 .topbar {
   height: 4.375rem;
@@ -11018,7 +11022,7 @@ form.user .btn-user {
 footer.sticky-footer {
   padding: 2rem 0;
   flex-shrink: 0;
-  width: 87%;
+  width: 80%;
 	position: absolute;
 	bottom: 0;
 }
